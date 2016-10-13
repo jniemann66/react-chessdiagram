@@ -121,6 +121,7 @@ class Chessdiagram extends Component {
 	_getPieces() {
 		if(!this.props.pieces)
 			return [];
+
 		return this.props.pieces.map((pieceString,i) => {
 			let [pieceType, square ] = pieceString.split('@',2);	// split 'piece@square' into pieceType, square
 			if(!square)
@@ -137,22 +138,22 @@ class Chessdiagram extends Component {
 		let pieces = [];
 		let fields = this.props.fen.split(" ", 6);
 
-		let rank=7, file = 0;
+		let rank=7, file = 0; // (zero-indexed)
 		let x,y,square;
-		for (let i =0; i<fields[0].length; i++) {
+		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
-			if(/[1-8]/.test(c)) {
-				file += Number(c);
-			} else if (c === "/") {
-				rank -= 1;
-				file = 0;
-			}	else if(/[KQRBNPkqrbnp]/.test(c)) {
+			if(/[KQRBNPkqrbnp]/.test(c)) {
 				x = this.props.squareSize * (1 + file);
 				y = this.props.squareSize * (this.props.ranks - rank -1);
 				square = String.fromCharCode(97 + file) + (rank + 1).toString();
 				pieces.push({pieceType: c, square: square, x: x, y: y});
 				file++;
-			}
+			} else if (c === "/") {
+				rank -= 1;
+				file = 0;
+			}	else if(/[1-8]/.test(c)) {
+				file += Number(c);
+			} 
 		}
 		return pieces;
 	}

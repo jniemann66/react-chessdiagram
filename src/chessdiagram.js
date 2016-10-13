@@ -79,7 +79,6 @@ class Chessdiagram extends Component {
 
 	_grab(x,y) {
 	
-		console.log(x,y);
 		let boardW = this.props.squareSize * (1+this.props.files);
 		let boardH = this.props.squareSize * (this.props.ranks);
 		
@@ -120,6 +119,8 @@ class Chessdiagram extends Component {
 	}
 
 	_getPieces() {
+		if(!this.props.pieces)
+			return [];
 		return this.props.pieces.map((pieceString,i) => {
 			let [pieceType, square ] = pieceString.split('@',2);	// split 'piece@square' into pieceType, square
 			if(!square)
@@ -132,13 +133,40 @@ class Chessdiagram extends Component {
 		});
 	}
 
+	_getPiecesFromFEN() {
+		let pieces = [];
+		let fields = this.props.fen.split(" ", 6);
+
+		let rank=7, file = 0;
+		let x,y,square;
+		for (let i =0; i<fields[0].length; i++) {
+			let c = fields[0].charAt(i);
+			if(/[1-8]/.test(c)) {
+				file += Number(c);
+			} else if (c === "/") {
+				rank -= 1;
+				file = 0;
+			}	else if(/[KQRBNPkqrbnp]/.test(c)) {
+				x = this.props.squareSize * (1 + file);
+				y = this.props.squareSize * (this.props.ranks - rank -1);
+				square = String.fromCharCode(97 + file) + (rank + 1).toString();
+				pieces.push({pieceType: c, square: square, x: x, y: y});
+				file++;
+			}
+		}
+		return pieces;
+	}
+
 	_getPieceAtSquare(square) {
-		return this._getPieces().filter(pieceLocation => pieceLocation.square === square)[0];
+			let pieces = this.props.fen ? this._getPiecesFromFEN() : this._getPieces();
+			return pieces.filter(pieceLocation => pieceLocation.square === square)[0];
 	}
 
 	// render function
 
 	render() {
+		let pieces = this.props.fen ? this._getPiecesFromFEN() : this._getPieces();
+	
 		return (
 				<svg 
 					width={this.props.width === "auto" ? (1 + this.props.files) * this.props.squareSize : this.props.width}
@@ -156,7 +184,7 @@ class Chessdiagram extends Component {
 						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor}
 					/>
 					
-					{this._getPieces().map((piece, i) => 
+					{pieces.map((piece, i) => 
 						<Piece 
 							x={this.state.isDragging && piece.square === this.state.selectedSquare ? this.state.dragX - this.props.squareSize / 2 : piece.x}
 							y={this.state.isDragging && piece.square === this.state.selectedSquare ? this.state.dragY - this.props.squareSize / 2 : piece.y} 

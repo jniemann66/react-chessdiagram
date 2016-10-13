@@ -16,8 +16,7 @@ import './piece.css';
 
 class Piece extends Component {
 	render() {
-		let crap;
-		let scale = this.props.squareSize / 45; // coordingates for drawings are based on suqare size of 45 
+		let scale = this.props.squareSize / 45; // coordinates for drawings are based on suqare size of 45 
 		let transformString= 'translate(' + this.props.x + ',' + this.props.y + ') scale(' + scale + ')';
 		switch(this.props.pieceType) {
 			case 'K':

@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 class Square extends Component {
 	render() {
 		let fillColor = this.props.light ? this.props.lightSquareColor : this.props.darkSquareColor; 
-		// "#2492FF" : "#005EBB";
-		// "#ff20ff" : "#7f107f"
 		return <rect x={this.props.x} y={this.props.y} width={this.props.squareSize} height={this.props.squareSize} stroke="black" fill={fillColor} strokeWidth="1" />;
 	}
 }

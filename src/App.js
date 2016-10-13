@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Chessdiagram from './chessdiagram.js';
 
+		
+
 import './App.css';
 
 // import processCSS from './cssconsolidate.js';
@@ -8,6 +10,8 @@ import './App.css';
 
 class App extends Component {
   render() {
+		const FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		const FEN2 = "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2";
 
 		const pieces = ['suck it','q@C4'];		
 		const pieces2=[
@@ -52,7 +56,7 @@ class App extends Component {
     return (
 			<div>
 			<p> chess ! </p>
-			<Chessdiagram pieces={pieces2} squareSize={60}/>
+			<Chessdiagram fen={FEN} squareSize={60}/>
 			
 			</div>
     );

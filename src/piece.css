@@ -1,0 +1,260 @@
+/* Style sheet for Pieces
+Attribution:
+Original SVG data here: https://commons.wikimedia.org/wiki/File:Chess_Pieces_Sprite.svg
+(Data in this file extracted from inline svg styling )
+*/
+
+.g_0, /* White King */
+.g_6 { /* Black King */
+	fill: none;
+	fill-opacity: 1;
+	fill-rule: evenodd;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+
+.g_1,		/* white Queen */
+.g_5 { /* White Rook*/
+	opacity: 1;
+	fill: #ffffff;
+	fill-opacity: 1;
+	fill-rule: evenodd;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+
+.g_2, /* White Bishop Container */
+.g_9 { /* Black Bishop Container */
+	opacity: 1;
+	fill: none;
+	fill-rule: evenodd;
+	fill-opacity: 1;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+.g_3 { /* white bishop body */
+	fill: #ffffff;
+	stroke: #000000;
+	stroke-linecap: butt;
+}
+
+.g_4 { /* White Knight */
+	opacity: 1;
+	fill: none;
+	fill-opacity: 1;
+	fill-rule: evenodd;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+
+.g_10 { /* black Bishop Body */
+	fill: #000000;
+	stroke: #000000;
+	stroke-linecap: butt;
+}
+
+.g_11 { /* Black Knight */
+	opacity: 1;
+	fill: none;
+	fill-opacity: 1;
+	fill-rule: evenodd;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+
+.g_7, /* Black Queen */
+.g_12 { /* Black Rook */
+	opacity: 1;
+	fill: #000000;
+	fill-opacity: 1;
+	fill-rule: evenodd;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+
+.g_8 { /* Black + White Queen jewels */
+	fill: #000000;
+	stroke: none;
+}
+
+.path_0,
+.path_1,
+.path_11, /* white bishop cross and lines */
+.path_20,
+.path_22,
+.path_25 {
+	fill: none;
+	stroke: #000000;
+	stroke-linejoin: miter;
+}
+.path_2 {
+	fill: #ffffff;
+	stroke: #000000;
+	stroke-linecap: butt;
+	stroke-linejoin: miter;
+}
+.path_3,
+.path_12 {
+	fill: #ffffff;
+	stroke: #000000;
+}
+
+.path_13 { /* White Knight Head */
+	fill: #ffffff;
+	stroke: #000000;
+	stroke-width: 1.4;
+}
+
+.path_4,
+.path_5,
+.path_6 {
+	fill: none;
+	stroke: #000000;
+}
+
+.path_7,
+.path_8,
+.path_16,
+.path_17,
+.path_18,
+.path_29,
+.path_41,
+.path_42,
+.path_43,
+.path_45,
+.path_46 {
+	stroke-linecap: butt;
+}
+.path_9,
+.path_10 {
+	fill: none;
+}
+
+.path_14,
+.path_15,
+.path_24,
+.path_36 {
+	fill: #000000;
+	stroke: #000000;
+}
+
+.path_37 { /* black Knight Head */
+	fill: #000000;
+	stroke: #000000;
+	stroke-width: 1.4;
+}
+
+.path_19 {
+	stroke-linecap: butt;
+	stroke-linejoin: miter;
+}
+.path_21 {
+	opacity: 1;
+	fill: #ffffff;
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}
+.path_23 {
+	fill: #000000;
+	fill-opacity: 1;
+	stroke-linecap: butt;
+	stroke-linejoin: miter;
+}
+.path_26,
+.path_27,
+.path_31,
+.path_32,
+.path_33,
+.path_34 {
+	fill: none;
+	stroke: #ffffff;
+}
+
+.path_28 {
+	stroke-linecap: butt;
+	stroke: #000000;
+}
+.path_30 {
+	fill: none;
+	stroke: #000000;
+	stroke-linecap: butt;
+}
+
+.path_35 { /* Black bishop Cross and Lines */
+	fill: none;
+	stroke: #ffffff;
+	stroke-linejoin: miter;
+}
+.path_38,
+.path_39 {
+	fill: #ffffff;
+	stroke: #ffffff;
+}
+.path_40 {
+	fill: #ffffff;
+	stroke: none;
+}
+.path_44 {
+	stroke-linecap: butt;
+	stroke-linejoin: miter;
+}
+.path_47,
+.path_48,
+.path_49,
+.path_50,
+.path_51 {
+	fill: none;
+	stroke: #ffffff;
+	stroke-width: 1;
+	stroke-linejoin: miter;
+}
+.path_52 {
+	opacity: 1;
+	fill: #000000;
+	fill-opacity: 1;
+	fill-rule: nonzero;
+	stroke: #000000;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: miter;
+	stroke-miterlimit: 4;
+	stroke-dasharray: none;
+	stroke-opacity: 1;
+}

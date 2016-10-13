@@ -1,16 +1,60 @@
 import React, { Component } from 'react';
-import Chessdiagram from './chessdiagram.js';
-
-		
+import Chessdiagram from './chessdiagram.js';		
 
 import './App.css';
 
-// import processCSS from './cssconsolidate.js';
-// processCSS();
-
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", // starting position
+			lastMessage: '',
+		};
+	}
+
+// event handlers:
+
+	_onPositionChanged(evt) { // user inputted new position
+		this.setState({currentPosition: evt.target.value});
+	}
+
+	_onMovePiece(piece, fromSquare, toSquare) { // user moved a piece
+		// echo move back to user:
+		let message = 'You moved ' + piece + fromSquare + " to " + toSquare + ' !';
+		this.setState({lastMessage: message}, (()=> {
+			setTimeout(()=> {
+					this.setState({lastMessage: ''}); 
+			}, 2000); // clear message after 2s	
+		}));
+	}
+
+// the render() function:
   render() {
-		const FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    return (
+			<div>
+				<h1>Chess Diagram</h1>
+				<div>
+					<p> Enter a position (using a FEN string) here:</p>
+					<input type="text" value={this.state.currentPosition} size="100" onChange={this._onPositionChanged.bind(this)} 
+						autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
+					<p/>
+				</div>
+								
+				<Chessdiagram fen={this.state.currentPosition} squareSize={60} onMovePiece={this._onMovePiece.bind(this)}/>
+				<p><strong>{this.state.lastMessage}</strong></p>
+			</div>
+    );
+  }
+}
+
+export default App;
+
+// <Chessdiagram pieces={pieces} squareSize={34}/>
+
+		// "#2492FF" : "#005EBB"; // blue
+		// "#ff20ff" : "#7f107f" // pink
+
+/* 	const FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 		const FEN2 = "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2";
 
 		const pieces = ['suck it','q@C4'];		
@@ -52,20 +96,4 @@ class App extends Component {
 			'r@h8',
 			
 		];
-
-    return (
-			<div>
-			<p> chess ! </p>
-			<Chessdiagram fen={FEN} squareSize={60}/>
-			
-			</div>
-    );
-  }
-}
-
-export default App;
-
-// <Chessdiagram pieces={pieces} squareSize={34}/>
-
-		// "#2492FF" : "#005EBB"; // blue
-		// "#ff20ff" : "#7f107f" // pink
+*/

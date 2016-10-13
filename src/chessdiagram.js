@@ -60,19 +60,23 @@ class Chessdiagram extends Component {
 	}
 
 	_onTouchMove(evt) {
-			evt.preventDefault();
-	let x = evt.touches[0].clientX - this.state.left;
+		evt.preventDefault();
+		let x = evt.touches[0].clientX - this.state.left;
 		let y = evt.touches[0].clientY - this.state.top;
 		this._move(x,y);
 	}
 
 	_onMouseUp(evt) {
 		evt.preventDefault();
-		this._release();
+		let x = evt.clientX - this.state.left;
+		let y = evt.clientY - this.state.top;
+		this._release(x,y);
 	}
 	_onTouchEnd(evt) {
 		evt.preventDefault();
-		this._release();
+		let x = evt.touches[0].clientX - this.state.left;
+		let y = evt.touches[0].clientY - this.state.top;
+		this._release(x,y);
 	}
 
 	// private actions
@@ -107,8 +111,16 @@ class Chessdiagram extends Component {
 		}
 	}
 
-	_release() {
+	_release(x,y) {
 		this.setState({isDragging: false});
+		if(this.props.onMovePiece) {
+			let file = String.fromCharCode(97 + x / this.props.squareSize - 1);
+			let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
+			let finalSquare = file + rank;
+			if(this.state.selectedSquare !== finalSquare) {
+				this.props.onMovePiece(this.state.selectedPieceType, this.state.selectedSquare, finalSquare);
+			}
+		}
 	}
 
 	// self-enquiry ////

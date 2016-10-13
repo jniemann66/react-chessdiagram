@@ -31,7 +31,7 @@ class App extends Component {
 // the render() function:
   render() {
     return (
-			<div>
+			<div className="demo">
 				<h1>Chess Diagram</h1>
 				<div>
 					<p> Enter a position (using a FEN string) here:</p>

@@ -62,3 +62,6 @@ class App extends Component {
 export default App;
 
 // <Chessdiagram pieces={pieces} squareSize={34}/>
+
+		// "#2492FF" : "#005EBB"; // blue
+		// "#ff20ff" : "#7f107f" // pink

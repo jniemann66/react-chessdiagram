@@ -15,6 +15,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", // starting position
+			flip: false,
 			lastMessage: '',
 		};
 	}
@@ -23,6 +24,10 @@ class App extends Component {
 
 	_onPositionChanged(evt) { // user inputted new position
 		this.setState({currentPosition: evt.target.value});
+	}
+
+	_onFlipChanged(evt) { //flip board
+		this.setState({flip: evt.target.checked});
 	}
 
 	_onMovePiece(piece, fromSquare, toSquare) { // user moved a piece
@@ -44,11 +49,10 @@ class App extends Component {
 					<p> Enter a position (using a FEN string) here:</p>
 					<input type="text" value={this.state.currentPosition} size="60" onChange={this._onPositionChanged.bind(this)} 
 						autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
+					<p>Flip Board ?<input type="checkbox" value={this.state.flip} onChange={this._onFlipChanged.bind(this)} /></p>
 					<p/>
 				</div>
-								
-				<Chessdiagram flip={false} fen={this.state.currentPosition} squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
-				<Chessdiagram flip={true} fen={this.state.currentPosition}  squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
+				<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
 				<p><strong>{this.state.lastMessage}</strong></p>
 			</div>
     );

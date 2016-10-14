@@ -98,8 +98,9 @@ class Board extends Component {
 
 	shouldComponentUpdate(nextProps) {
 		return ( // note: put most likely changes towards the top ...
-			nextProps.squareSize !== this.props.squareSize ||
+			nextProps.selectedSquare !== this.props.selectedSquare ||
 			nextProps.flip !== this.props.flip ||
+			nextProps.squareSize !== this.props.squareSize ||
 			nextProps.lightSquareColor !== this.props.lightSquareColor ||
 			nextProps.darkSquareColor !== this.props.darkSquareColor ||
 			nextProps.ranks !== this.props.ranks ||

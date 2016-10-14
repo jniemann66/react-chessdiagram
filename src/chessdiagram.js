@@ -82,27 +82,40 @@ class Chessdiagram extends Component {
 	// coordinate conversion functions ////
 
 	_squareToCoords(square) { // convert a square name (eg 'e4') to coordinates
+		if(this.props.flip) {
+			let x = this.props.squareSize * (this.props.files - (square.toLowerCase().charCodeAt(0)-97));
+			let y = (Number(square.slice(1))-1) * this.props.squareSize;
+			console.log(x,y);
+			return [x,y];
+		} else {
 			let x = this.props.squareSize * (1 + square.toLowerCase().charCodeAt(0)-97);
 			let y = (this.props.ranks-Number(square.slice(1))) * this.props.squareSize;
 			return [x,y];
+		}
 	}
 
 	_fileRankToCoords(file, rank) { // convert zero-based file and rank values to coordinates
+		if(this.props.flip) {
+			let	x = this.props.squareSize * (this.props.files - file);
+			let y = this.props.squareSize * rank;
+			return [x,y];
+		} else {
 			let	x = this.props.squareSize * (1 + file);
 			let y = this.props.squareSize * (this.props.ranks - rank -1);
 			return [x,y];
-	}
-
-	_coordsToFileRank (x,y) { // convert coordinates to zero-based file and rank values
-			let file = x / this.props.squareSize - 1;
-			let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
-			return [file, rank];
+		}
 	}
 
 	_coordsToSquare (x,y) { // convert coordinates to square name (eg e4)
+		if(this.props.flip) {
+			let file = String.fromCharCode(97 + this.props.files - x / this.props.squareSize + 1);
+			let rank = 1 + Math.floor(y / this.props.squareSize);
+			return file + rank;
+		} else {
 			let file = String.fromCharCode(97 + x / this.props.squareSize - 1);
 			let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
 			return file + rank;
+		}
 	}
 
 	// private actions
@@ -167,8 +180,6 @@ class Chessdiagram extends Component {
 		});
 	}
 
-	
-
 	_getPiecesFromFEN() {
 		let pieces = [];
 		let fields = this.props.fen.split(" ", 6);
@@ -216,7 +227,7 @@ class Chessdiagram extends Component {
 					
 					<Board 
 						squareSize={this.props.squareSize} ranks={this.props.ranks} files={this.props.files} selectedSquare={this.state.selectedSquare}
-						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor}
+						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor} flip={!!this.props.flip}
 					/>
 					
 					{pieces.map((piece, i) => 

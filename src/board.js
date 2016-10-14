@@ -16,11 +16,24 @@ class SquareHighlight extends Component {
 
 class RankLabels extends Component {
 
+	_fileRankToCoords(file, rank) { // convert zero-based file and rank values to coordinates
+		if(this.props.flip) {
+			let	x = this.props.squareSize * (this.props.files - file);
+			let y = this.props.squareSize * rank;
+			return [x,y];
+		} else {
+			let	x = this.props.squareSize * (1 + file);
+			let y = this.props.squareSize * (this.props.ranks - rank -1);
+			return [x,y];
+		}
+	}
+
 	render() {
 
 		let rankLabels = [];
 		for (let rank=0; rank < this.props.ranks; rank++) {
-			rankLabels.push({y: this.props.squareSize / 2 + (this.props.ranks -1 - rank) * this.props.squareSize, label: rank + 1});
+			let y0 = this.props.flip ? rank : this.props.ranks - rank -1;
+			rankLabels.push({y: this.props.squareSize / 2 + y0 * this.props.squareSize, label: rank + 1});
 		}
 
 		return (
@@ -40,7 +53,8 @@ class FileLabels extends Component {
 
 		let fileLabels = [];
 		for (let file=0; file < this.props.files; file++) {
-			fileLabels.push({x: this.props.squareSize / 2 + (1 + file) * this.props.squareSize, label: String.fromCharCode(97 + file)});
+			let x0 = this.props.flip ? this.props.files - file : 1 + file;
+			fileLabels.push({x: this.props.squareSize / 2 + x0 * this.props.squareSize, label: String.fromCharCode(97 + file)});
 		}
 
 		return (
@@ -55,6 +69,36 @@ class FileLabels extends Component {
 }
 
 class Board extends Component {
+
+		// coordinate conversion functions ////
+
+	_squareToCoords(square) { // convert a square name (eg 'e4') to coordinates
+		if(this.props.flip) {
+			let x = this.props.squareSize * (this.props.files - (square.toLowerCase().charCodeAt(0)-97));
+			let y = (Number(square.slice(1))-1) * this.props.squareSize;
+			console.log(x,y);
+			return [x,y];
+		} else {
+			let x = this.props.squareSize * (1 + square.toLowerCase().charCodeAt(0)-97);
+			let y = (this.props.ranks-Number(square.slice(1))) * this.props.squareSize;
+			return [x,y];
+		}
+	}
+
+	_fileRankToCoords(file, rank) { // convert zero-based file and rank values to coordinates
+		if(this.props.flip) {
+			let	x = this.props.squareSize * (this.props.files - file);
+			let y = this.props.squareSize * rank;
+			return [x,y];
+		} else {
+			let	x = this.props.squareSize * (1 + file);
+			let y = this.props.squareSize * (this.props.ranks - rank -1);
+			return [x,y];
+		}
+	}
+
+	// the render() function
+
 	render() {
 		
 		let squares = [];
@@ -62,14 +106,14 @@ class Board extends Component {
 		// push coordinates into array
 		for (let file=0; file < this.props.files; file++){
 			for (let rank=0; rank < this.props.ranks; rank++) {
-				squares.push({x: (1+file) * this.props.squareSize, y: (this.props.ranks -1 - rank) * this.props.squareSize, light: (file ^ rank) & 1});
+				let [x,y] = this._fileRankToCoords(file, rank);
+				squares.push({x: x, y: y, light: (file ^ rank) & 1});
 			}
 		}
 
 		let selectedSquareX, selectedSquareY;
 		if(this.props.selectedSquare) {
-			selectedSquareX = this.props.squareSize * (1 + this.props.selectedSquare.toLowerCase().charCodeAt(0)-97);
-			selectedSquareY = (this.props.ranks-Number(this.props.selectedSquare.slice(1))) * this.props.squareSize;
+			[selectedSquareX, selectedSquareY] = this._squareToCoords(this.props.selectedSquare);
 		}
 		return (
 			
@@ -81,8 +125,8 @@ class Board extends Component {
 					/>
 				)}
 
-				<RankLabels ranks={this.props.ranks} files={this.props.files} squareSize={this.props.squareSize}/>
-				<FileLabels ranks={this.props.ranks} files={this.props.files} squareSize={this.props.squareSize}/>
+				<RankLabels ranks={this.props.ranks} files={this.props.files} squareSize={this.props.squareSize} flip={this.props.flip}/>
+				<FileLabels ranks={this.props.ranks} files={this.props.files} squareSize={this.props.squareSize} flip={this.props.flip}/>
 				{(() => this.props.selectedSquare ? <SquareHighlight x={selectedSquareX} y={selectedSquareY} squareSize={this.props.squareSize}/> : <g/> )()}
 			</svg>
 		);			

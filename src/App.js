@@ -40,7 +40,7 @@ class App extends Component {
 					<p/>
 				</div>
 								
-				<Chessdiagram fen={this.state.currentPosition} squareSize={60} onMovePiece={this._onMovePiece.bind(this)}/>
+				<Chessdiagram fen={this.state.currentPosition} squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
 				<p><strong>{this.state.lastMessage}</strong></p>
 			</div>
     );

@@ -14,6 +14,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			lightSquareColor: "#2492FF", // light blue
+			darkSquareColor: "#005EBB", // dark blue
 			currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", // starting position
 			flip: false,
 			lastMessage: '',
@@ -28,6 +30,14 @@ class App extends Component {
 
 	_onFlipChanged(evt) { //flip board
 		this.setState({flip: evt.target.checked});
+	}
+
+	_onLightSquareColorChanged(evt) {
+		this.setState({lightSquareColor: evt.target.value});
+	}
+
+	_onDarkSquareColorChanged(evt) {
+		this.setState({darkSquareColor: evt.target.value});
 	}
 
 	_onMovePiece(piece, fromSquare, toSquare) { // user moved a piece
@@ -50,9 +60,13 @@ class App extends Component {
 					<input type="text" value={this.state.currentPosition} size="60" onChange={this._onPositionChanged.bind(this)} 
 						autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
 					<p>Flip Board ?<input type="checkbox" value={this.state.flip} onChange={this._onFlipChanged.bind(this)} /></p>
+					<p>Light Square Color:<input type="color" value={this.state.lightSquareColor} onChange={this._onLightSquareColorChanged.bind(this)} /></p>
+					<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
+
 					<p/>
 				</div>
-				<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
+				<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} 
+				lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}/>
 				<p><strong>{this.state.lastMessage}</strong></p>
 			</div>
     );

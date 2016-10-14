@@ -79,6 +79,32 @@ class Chessdiagram extends Component {
 		this._release(x,y);
 	}
 
+	// coordinate conversion functions ////
+
+	_squareToCoords(square) { // convert a square name (eg 'e4') to coordinates
+			let x = this.props.squareSize * (1 + square.toLowerCase().charCodeAt(0)-97);
+			let y = (this.props.ranks-Number(square.slice(1))) * this.props.squareSize;
+			return [x,y];
+	}
+
+	_fileRankToCoords(file, rank) { // convert zero-based file and rank values to coordinates
+			let	x = this.props.squareSize * (1 + file);
+			let y = this.props.squareSize * (this.props.ranks - rank -1);
+			return [x,y];
+	}
+
+	_coordsToFileRank (x,y) { // convert coordinates to zero-based file and rank values
+			let file = x / this.props.squareSize - 1;
+			let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
+			return [file, rank];
+	}
+
+	_coordsToSquare (x,y) { // convert coordinates to square name (eg e4)
+			let file = String.fromCharCode(97 + x / this.props.squareSize - 1);
+			let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
+			return file + rank;
+	}
+
 	// private actions
 
 	_grab(x,y) {
@@ -91,9 +117,7 @@ class Chessdiagram extends Component {
 			return false;
 		}
 
-		let file = String.fromCharCode(97 + x / this.props.squareSize - 1);
-		let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
-		let selectedSquare = file + rank;
+		let selectedSquare = this._coordsToSquare(x,y);
 		let selectedPiece = this._getPieceAtSquare(selectedSquare);
 
 		this.setState({
@@ -114,9 +138,7 @@ class Chessdiagram extends Component {
 	_release(x,y) {
 		this.setState({isDragging: false});
 		if(this.props.onMovePiece) {
-			let file = String.fromCharCode(97 + x / this.props.squareSize - 1);
-			let rank = 1 + Math.floor((this.props.ranks * this.props.squareSize - y) / this.props.squareSize);
-			let finalSquare = file + rank;
+			let finalSquare = this._coordsToSquare(x,y);
 			if(this.state.selectedSquare !== finalSquare) {
 				this.props.onMovePiece(this.state.selectedPieceType, this.state.selectedSquare, finalSquare);
 			}
@@ -138,13 +160,14 @@ class Chessdiagram extends Component {
 			let [pieceType, square ] = pieceString.split('@',2);	// split 'piece@square' into pieceType, square
 			if(!square)
 				return {pieceType: 'invalid', square: 'none', x: 0,y: 0}; // guard against nonsense input
-			let x = this.props.squareSize * (1 + square.toLowerCase().charCodeAt(0)-97);
-			let y = (this.props.ranks-Number(square.slice(1))) * this.props.squareSize;
+			let [x,y] = this._squareToCoords(square);
 			if (isNaN(y))
 				return {pieceType: 'invalid', square: 'none', x: 0,y: 0}; // invalid y-coordinate
 			return {pieceType: pieceType, square: square.toLowerCase(), x: x, y: y};
 		});
 	}
+
+	
 
 	_getPiecesFromFEN() {
 		let pieces = [];
@@ -155,8 +178,7 @@ class Chessdiagram extends Component {
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
 			if(/[KQRBNPkqrbnp]/.test(c)) {
-				x = this.props.squareSize * (1 + file);
-				y = this.props.squareSize * (this.props.ranks - rank -1);
+				let [x,y] = this._fileRankToCoords(file, rank);
 				square = String.fromCharCode(97 + file) + (rank + 1).toString();
 				pieces.push({pieceType: c, square: square, x: x, y: y});
 				file++;

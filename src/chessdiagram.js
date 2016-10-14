@@ -31,7 +31,7 @@ class Chessdiagram extends Component {
 	componentWillUnmount() {
 		removeEventListener('resize', this._onResize.bind(this));
 	}
-
+	
 	// event handling ////
 
 	_onResize(evt) { // (DOM event)
@@ -85,7 +85,6 @@ class Chessdiagram extends Component {
 		if(this.props.flip) {
 			let x = this.props.squareSize * (this.props.files - (square.toLowerCase().charCodeAt(0)-97));
 			let y = (Number(square.slice(1))-1) * this.props.squareSize;
-			console.log(x,y);
 			return [x,y];
 		} else {
 			let x = this.props.squareSize * (1 + square.toLowerCase().charCodeAt(0)-97);
@@ -143,7 +142,8 @@ class Chessdiagram extends Component {
 	}
 
 	_move(x, y) {
-		if(this.state.isDragging){
+
+		if(this.state.isDragging) {
 			this.setState({dragX: x, dragY: y});
 		}
 	}
@@ -248,6 +248,7 @@ Chessdiagram.propTypes = {
 	files: React.PropTypes.number,
 	lightSquareColor: React.PropTypes.string,
 	darkSquareColor: React.PropTypes.string,
+	flip: React.PropTypes.bool,
 }
 
 Chessdiagram.defaultProps = {
@@ -258,6 +259,7 @@ Chessdiagram.defaultProps = {
 	files: 8,
 	lightSquareColor: "#2492FF",
 	darkSquareColor:  "#005EBB",
+	flip: false,
 }
 
 export default Chessdiagram;

@@ -76,7 +76,6 @@ class Board extends Component {
 		if(this.props.flip) {
 			let x = this.props.squareSize * (this.props.files - (square.toLowerCase().charCodeAt(0)-97));
 			let y = (Number(square.slice(1))-1) * this.props.squareSize;
-			console.log(x,y);
 			return [x,y];
 		} else {
 			let x = this.props.squareSize * (1 + square.toLowerCase().charCodeAt(0)-97);
@@ -97,10 +96,20 @@ class Board extends Component {
 		}
 	}
 
+	shouldComponentUpdate(nextProps) {
+		return ( // note: put most likely changes towards the top ...
+			nextProps.squareSize !== this.props.squareSize ||
+			nextProps.flip !== this.props.flip ||
+			nextProps.lightSquareColor !== this.props.lightSquareColor ||
+			nextProps.darkSquareColor !== this.props.darkSquareColor ||
+			nextProps.ranks !== this.props.ranks ||
+			nextProps.files !== this.props.files
+		);
+	}
+
 	// the render() function
 
 	render() {
-		
 		let squares = [];
 
 		// push coordinates into array
@@ -139,6 +148,7 @@ Board.propTypes = {
 	files: React.PropTypes.number,
 	lightSquareColor: React.PropTypes.string,
 	darkSquareColor: React.PropTypes.string,
+	flip: React.PropTypes.bool,
 }
 
 Board.defaultProps = {
@@ -147,6 +157,7 @@ Board.defaultProps = {
 	files: 8,
 	lightSquareColor: "#2492FF",
 	darkSquareColor:  "#005EBB",
+	flip: false,
 }
 
 export default Board;

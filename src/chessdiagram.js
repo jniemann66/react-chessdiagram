@@ -189,7 +189,7 @@ class Chessdiagram extends Component {
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
 			if(/[KQRBNPkqrbnp]/.test(c)) {
-				let [x,y] = this._fileRankToCoords(file, rank);
+				[x,y] = this._fileRankToCoords(file, rank);
 				square = String.fromCharCode(97 + file) + (rank + 1).toString();
 				pieces.push({pieceType: c, square: square, x: x, y: y});
 				file++;

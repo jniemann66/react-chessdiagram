@@ -42,7 +42,6 @@ class Chessdiagram extends Component {
 		evt.preventDefault();
 		let x = evt.clientX - this.state.left;
 		let y = evt.clientY - this.state.top;
-		
 		this._grab(x,y);
 	}
 
@@ -71,7 +70,6 @@ class Chessdiagram extends Component {
 		evt.preventDefault();
 		let x = evt.clientX - this.state.left;
 		let y = evt.clientY - this.state.top;
-		
 		this._release(x,y);
 	}
 	_onTouchEnd(evt) {

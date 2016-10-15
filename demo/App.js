@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Chessdiagram from './chessdiagram.js';		
+import ReactDOM from 'react-dom';	
+import Chessdiagram from '../src/chessdiagram.js';
 
 import './App.css';
 
@@ -72,16 +73,7 @@ class App extends Component {
   }
 }
 
-// pieces={pieces2}
-
-/*
-<Chessdiagram flip={false} pieces={pieces} squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
-				<Chessdiagram  flip={true} pieces={pieces}  squareSize={30} lightSquareColor="#2492FF" darkSquareColor="#005EBB" onMovePiece={this._onMovePiece.bind(this)}/>
-*/
-
-export default App;
-
-// <Chessdiagram pieces={pieces} squareSize={34}/>
-
-		// "#2492FF" : "#005EBB"; // blue
-		// "#ff20ff" : "#7f107f" // pink
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);

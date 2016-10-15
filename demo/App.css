@@ -1,5 +1,6 @@
-.App {
+.App h1 p {
   text-align: center;
+  font-family: sans-serif;
 }
 
 .demo {

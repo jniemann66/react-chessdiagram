@@ -9,13 +9,43 @@ It is almost entirely stateless. (some state is maintained to keep track of mous
 
 A callback facility is provided to report dragged pieces back to the host application.
 
-to-do: 
+#### sample usage
 
-ability to flip board (Black's Pov ... )
-show side to move
+    import Chessdiagram from '../src/chessdiagram.js';
+	
+	...
+
+	render() {
+		<div>
+			<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} 
+			lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}/>
+		</div>
+	}
+	
+
+
+#### build commands:
+
+dev: **npm run dev** - (output to ./build/dev.chessdiagram.js and served on http://localhost:8080 by dev server)
+
+dist: **npm run build** - (output to ./build/dist.chessdiagram.js)
+
+
+####to-do: 
+
+docs / auto-docs
+unit tests
+publish to npm
+add a prop for optionally hiding labels etc.
+show side to move, castling rights and other info
 show arrows etc
 handle remaining 5 FEN fields etc
+more piece types
 
+
+####recently completed:
+
+webpack setup for distributing as component with demo.
 
 
 

@@ -74,8 +74,12 @@ class Chessdiagram extends Component {
 	}
 	_onTouchEnd(evt) {
 		evt.preventDefault();
+		/* // Note: android doesn't populate touches array on touchend
 		let x = evt.touches[0].clientX - this.state.left;
 		let y = evt.touches[0].clientY - this.state.top;
+		*/
+		let [x,y] = [this.state.dragX, this.state.dragY];
+
 		this._release(x,y);
 	}
 

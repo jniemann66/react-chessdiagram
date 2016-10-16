@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Board from './board.js';
 import Piece from './piece.js';
 
+/** Chessdiagram : draws a chess diagram consisting of a board and pieces, using svg graphics */
 class Chessdiagram extends Component {
 	constructor(props){
 		super(props);

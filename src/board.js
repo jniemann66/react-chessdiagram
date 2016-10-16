@@ -68,6 +68,7 @@ class FileLabels extends Component {
 	}
 }
 
+/** Board : draws a chess board with given square size, square colors, and number of files and ranks */
 class Board extends Component {
 
 		// coordinate conversion functions ////

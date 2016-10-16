@@ -13,7 +13,7 @@ import './piece.css';
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/** Piece: renders an svg chess piece of a given type and position */
 class Piece extends Component {
 
 	shouldComponentUpdate(nextProps, nextState) {

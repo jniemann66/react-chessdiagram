@@ -253,10 +253,25 @@ Chessdiagram.propTypes = {
 	files: React.PropTypes.number,
 	lightSquareColor: React.PropTypes.string,
 	darkSquareColor: React.PropTypes.string,
+	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */ 
 	flip: React.PropTypes.bool,
+	/** callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback */
+	onMovePiece: React.PropTypes.func,
+
+	/** width of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
+	width: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.number,
+	]),
+	/** height of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
+	height: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.number,
+	]),
 }
 
 Chessdiagram.defaultProps = {
+
 	width: 'auto',
 	height: 'auto',
 	squareSize: 45,

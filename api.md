@@ -1,3 +1,47 @@
+`Board` (component)
+===================
+
+Board : draws a chess board with given square size, square colors, and number of files and ranks
+
+Props
+-----
+
+### `darkSquareColor`
+
+type: `string`
+defaultValue: `"#005EBB"`
+
+
+### `files`
+
+type: `number`
+defaultValue: `8`
+
+
+### `flip`
+
+type: `bool`
+defaultValue: `false`
+
+
+### `lightSquareColor`
+
+type: `string`
+defaultValue: `"#2492FF"`
+
+
+### `ranks`
+
+type: `number`
+defaultValue: `8`
+
+
+### `squareSize`
+
+type: `number`
+defaultValue: `45`
+
+
 `Chessdiagram` (component)
 ==========================
 
@@ -10,6 +54,13 @@ Props
 
 type: `string`
 defaultValue: `"#005EBB"`
+
+
+### `fen`
+
+Chess position in FEN format (Forsyth-Edwards Notation). eg "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
+type: `string`
 
 
 ### `files`
@@ -45,6 +96,15 @@ defaultValue: `"#2492FF"`
 callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback
 
 type: `func`
+
+
+### `pieces`
+
+array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1']
+This format may be more suitable for unconventional board dimensions, for which standard FEN would not work 
+Note: If both fen and pieces props are present, fen will take precedence
+
+type: `array`
 
 
 ### `ranks`
@@ -90,49 +150,5 @@ type: `number`
 ### `y` (required)
 
 type: `number`
-
-
-`Board` (component)
-===================
-
-Board : draws a chess board with given square size, square colors, and number of files and ranks
-
-Props
------
-
-### `darkSquareColor`
-
-type: `string`
-defaultValue: `"#005EBB"`
-
-
-### `files`
-
-type: `number`
-defaultValue: `8`
-
-
-### `flip`
-
-type: `bool`
-defaultValue: `false`
-
-
-### `lightSquareColor`
-
-type: `string`
-defaultValue: `"#2492FF"`
-
-
-### `ranks`
-
-type: `number`
-defaultValue: `8`
-
-
-### `squareSize`
-
-type: `number`
-defaultValue: `45`
 
 

@@ -36,7 +36,7 @@ class Square extends Component {
 
 class SquareHighlight extends Component {
 	render() {
-		let highlightColor = "yellow";
+		let highlightColor = 'yellow';
 		return <rect x={this.props.x} y={this.props.y} width={this.props.squareSize} height={this.props.squareSize} stroke={highlightColor} fill="none" strokeWidth="3" />;
 	}
 }
@@ -70,7 +70,7 @@ class RankLabels extends Component {
 						{rankLabel.label}
 					</text>)}
 			</g>
-		)
+		);
 	}
 }
 
@@ -91,7 +91,7 @@ class FileLabels extends Component {
 						{fileLabel.label}
 					</text>)}
 			</g>
-		)
+		);
 	}
 }
 
@@ -178,7 +178,7 @@ Board.propTypes = {
 	lightSquareColor: React.PropTypes.string,
 	darkSquareColor: React.PropTypes.string,
 	flip: React.PropTypes.bool,
-}
+};
 
 Board.defaultProps = {
 	squareSize: 45,
@@ -187,6 +187,6 @@ Board.defaultProps = {
 	lightSquareColor: "#2492FF",
 	darkSquareColor:  "#005EBB",
 	flip: false,
-}
+};
 
 export default Board;

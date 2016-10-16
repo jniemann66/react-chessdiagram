@@ -11,7 +11,7 @@ A callback facility is provided to report dragged pieces back to the host applic
 
 #### sample usage
 
-    import Chessdiagram from '../src/chessdiagram.js';
+    import Chessdiagram from 'react-chessdiagram';
 	
 	...
 
@@ -34,20 +34,19 @@ generate API documentation: **npm run generate-docs**
 
 ####to-do: 
 
-
-unit tests
-publish to npm
-add a prop for optionally hiding labels etc.
-show side to move, castling rights and other info
-show arrows etc
-handle remaining 5 FEN fields etc
-more piece types
+- unit tests
+- publish to npm
+- add a prop for optionally hiding labels etc.
+- show side to move, castling rights and other info
+- show arrows etc
+- handle remaining 5 FEN fields etc
+- more piece types
 
 
 ####recently completed:
 
-webpack setup for distributing as component with demo.
-auto API-doc (api.md)
+- webpack setup for distributing as component with demo.
+- auto API-doc (api.md)
 
 
 

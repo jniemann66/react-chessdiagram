@@ -31,5 +31,9 @@
     "chess"
   ],
   "author": "Judd Niemann",
-  "license": "MIT"
+  "license": "MIT",
+	"repository":  { 
+		"type": "git",
+		"url": "https://github.com/jniemann66/react-chessdiagram.git"
+	}
 }

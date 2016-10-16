@@ -11,6 +11,8 @@ A callback facility is provided to report dragged pieces back to the host applic
 
 #### sample usage
 
+	import React, { Component } from 'react';
+	import ReactDOM from 'react-dom';	
     import Chessdiagram from 'react-chessdiagram';
 	
 	...

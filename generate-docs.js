@@ -18,8 +18,11 @@ fs.readdir('./src', function (err, files) {
 		fs.readFile(path.join('./src/',file), 'utf8', function (err,data) {
 			if (err)
 				return;
+			var componentName = path.basename(file, path.extname(file));
+			var componentNameCapitalized = componentName[0].toUpperCase() + componentName.slice(1);
 			var componentInfo = reactDocs.parse(data);
-			console.log(generateMarkdown(file, componentInfo));
+
+			console.log(generateMarkdown(componentNameCapitalized, componentInfo));
 		});
 	});
 });

@@ -296,6 +296,7 @@ class Piece extends Component {
 Piece.propTypes = {
 	x: React.PropTypes.number.isRequired,
 	y: React.PropTypes.number.isRequired,
+	/** recognized piece types: K,Q,R,B,N,P,k,q,r,b,n,p */
 	pieceType: React.PropTypes.string.isRequired,
 }
 

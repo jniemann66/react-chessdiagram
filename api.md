@@ -1,5 +1,5 @@
-`board.js` (component)
-======================
+`Board` (component)
+===================
 
 Board : draws a chess board with given square size, square colors, and number of files and ranks
 
@@ -42,8 +42,8 @@ type: `number`
 defaultValue: `45`
 
 
-`chessdiagram.js` (component)
-=============================
+`Chessdiagram` (component)
+==========================
 
 Chessdiagram : draws a chess diagram consisting of a board and pieces, using svg graphics
 
@@ -96,8 +96,8 @@ defaultValue: `45`
 defaultValue: `'auto'`
 
 
-`piece.js` (component)
-======================
+`Piece` (component)
+===================
 
 Piece: renders an svg chess piece of a given type and position
 
@@ -105,6 +105,8 @@ Props
 -----
 
 ### `pieceType` (required)
+
+recognized piece types: K,Q,R,B,N,P,k,q,r,b,n,p
 
 type: `string`
 

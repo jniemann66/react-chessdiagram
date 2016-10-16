@@ -65,8 +65,8 @@ class App extends Component {
 					<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
 					<p/>
 				</div>
-				<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} 
-					lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}/>
+					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} 
+						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}/>
 				<p><strong>{this.state.lastMessage}</strong></p>
 			</div>
     );

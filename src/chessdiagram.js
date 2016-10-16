@@ -52,20 +52,29 @@ class Chessdiagram extends Component {
 
 	componentDidMount() {
 		this._getClientPos();
-		addEventListener('resize', this._onResize.bind(this)); // resize event not provided by React; use DOM version
+		// add DOM events
+		addEventListener('resize', this._onResize.bind(this)); // resize event not provided by React events; use DOM version
+		addEventListener('scroll', this._onScroll.bind(this));
 	}
 
 	componentWillUnmount() {
 		removeEventListener('resize', this._onResize.bind(this));
+		removeEventListener('scroll', this._onScroll.bind(this));
 	}
 	
 	// event handling ////
-
-	_onResize(evt) { // (DOM event)
+	
+	// DOM events
+	_onResize(evt) {
 		this._getClientPos();
 	}
 
-	_onMouseDown(evt) {
+	_onScroll(evt) {
+		this._getClientPos();
+	}
+
+	// react events
+	_onMouseDown(evt) { // react event
 		evt.preventDefault();
 		let x = evt.clientX - this.state.left;
 		let y = evt.clientY - this.state.top;
@@ -192,6 +201,10 @@ class Chessdiagram extends Component {
 	// self-enquiry ////
 
 	_getClientPos() {
+		let body = document.body;
+    let docElem = document.documentElement;
+		let scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+    let scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
 		let rect = ReactDOM.findDOMNode(this).getBoundingClientRect();
 		this.setState({left: rect.left, top: rect.top, width: rect.width, height: rect.height});
 	}

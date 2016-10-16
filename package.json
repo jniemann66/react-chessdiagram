@@ -1,6 +1,6 @@
 {
   "name": "react-chessdiagram",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "chess diagram react component",
   "main": "./build/dist.chessdiagram.js",
   "dependencies": {
@@ -18,7 +18,7 @@
     "react-docgen": "^2.11.0",
     "react-dom": "^15.3.2",
     "style-loader": "^0.13.1",
-		"webpack": "^1.13.2",
+    "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2"
   },
   "scripts": {

@@ -201,10 +201,6 @@ class Chessdiagram extends Component {
 	// self-enquiry ////
 
 	_getClientPos() {
-		let body = document.body;
-    let docElem = document.documentElement;
-		let scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-    let scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
 		let rect = ReactDOM.findDOMNode(this).getBoundingClientRect();
 		this.setState({left: rect.left, top: rect.top, width: rect.width, height: rect.height});
 	}
@@ -315,7 +311,7 @@ Chessdiagram.propTypes = {
 	 * This format may be more suitable for unconventional board dimensions, for which standard FEN would not work 
 	 * Note: If both fen and pieces props are present, fen will take precedence */
 	pieces: React.PropTypes.array,
-}
+};
 
 Chessdiagram.defaultProps = {
 
@@ -327,6 +323,6 @@ Chessdiagram.defaultProps = {
 	lightSquareColor: "#2492FF",
 	darkSquareColor:  "#005EBB",
 	flip: false,
-}
+};
 
 export default Chessdiagram;

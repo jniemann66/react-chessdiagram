@@ -25,7 +25,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config webpack.dev.config.js --content-base build --devtool source-map --hot --inline --progress --colors",
     "build": "webpack -p",
-    "generate-docs": "node ./generate-docs.js"
+    "generate-docs": "node ./generate-docs.js >api.md"
   },
   "keywords": [
     "chess"

@@ -1,10 +1,9 @@
 var fs = require('fs');
 var path = require('path');
-
+var generateMarkdown = require('./generateMarkdown.js');
 
 var src = './src';
 var reactDocs = require('react-docgen');
-//var componentInfo = reactDocs.parse(src);
 
 fs.readdir('./src', function (err, files) {
 	if (err) {
@@ -20,7 +19,8 @@ fs.readdir('./src', function (err, files) {
 			if (err)
 				return;
 			var componentInfo = reactDocs.parse(data);
-			console.log(componentInfo);
+			console.log(generateMarkdown(file, componentInfo));
 		});
 	});
 });
+

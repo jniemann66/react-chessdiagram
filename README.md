@@ -35,7 +35,7 @@ generate API documentation: **npm run generate-docs**
 ####to-do: 
 
 - unit tests
-- publish to npm
+
 - add a prop for optionally hiding labels etc.
 - show side to move, castling rights and other info
 - show arrows etc
@@ -44,11 +44,8 @@ generate API documentation: **npm run generate-docs**
 
 
 ####recently completed:
-
-- webpack setup for distributing as component with demo.
+- publish to npm (Yippee - it's up there !!)
 - auto API-doc (api.md)
-
-
-
+- webpack setup for distributing as component with demo.
 
 

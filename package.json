@@ -1,6 +1,6 @@
 {
   "name": "react-chessdiagram",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "chess diagram react component",
   "main": "./build/dist.chessdiagram.js",
   "dependencies": {
@@ -28,12 +28,14 @@
     "generate-docs": "node ./generate-docs.js >api.md"
   },
   "keywords": [
-    "chess", "chess GUI", "react"
+    "chess",
+    "chess GUI",
+    "react"
   ],
   "author": "Judd Niemann",
   "license": "MIT",
-	"repository":  { 
-		"type": "git",
-		"url": "https://github.com/jniemann66/react-chessdiagram.git"
-	}
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jniemann66/react-chessdiagram.git"
+  }
 }

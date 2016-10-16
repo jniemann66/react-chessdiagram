@@ -30,10 +30,11 @@ dev: **npm run dev** - (output to ./build/dev.chessdiagram.js and served on http
 
 dist: **npm run build** - (output to ./build/dist.chessdiagram.js)
 
+generate API documentation: **npm run generate-docs**
 
 ####to-do: 
 
-docs / auto-docs
+
 unit tests
 publish to npm
 add a prop for optionally hiding labels etc.
@@ -46,6 +47,9 @@ more piece types
 ####recently completed:
 
 webpack setup for distributing as component with demo.
+auto API-doc (api.md)
+
+
 
 
 

@@ -28,7 +28,7 @@
     "generate-docs": "node ./generate-docs.js >api.md"
   },
   "keywords": [
-    "chess"
+    "chess", "chess GUI", "react"
   ],
   "author": "Judd Niemann",
   "license": "MIT",

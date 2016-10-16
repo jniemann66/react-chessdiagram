@@ -11,6 +11,8 @@ It is almost entirely stateless. (some state is maintained to keep track of mous
 
 A callback facility is provided to report dragged pieces back to the host application.
 
+API documentation: [./api.md](./api.md)
+
 #### sample usage
 
 	import React, { Component } from 'react';

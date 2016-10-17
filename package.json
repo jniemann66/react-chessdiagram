@@ -1,6 +1,6 @@
 {
   "name": "react-chessdiagram",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "chess diagram react component",
   "main": "./build/dist.chessdiagram.js",
   "dependencies": {
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "node node_modules/eslint/bin/eslint ./src --ext .js --ext .jsx --cache",
+    "lint": "node node_modules/eslint/bin/eslint ./src --ext .js --ext .jsx --cache",
     "dev": "webpack-dev-server --config webpack.dev.config.js --content-base build --devtool source-map --hot --inline --progress --colors",
     "build": "webpack -p",
     "generate-docs": "node ./generate-docs.js >api.md"

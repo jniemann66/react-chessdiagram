@@ -108,6 +108,7 @@ class Chessdiagram extends Component {
 		let y = evt.clientY - this.state.top;
 		this._release(x,y);
 	}
+
 	_onTouchEnd(evt) {
 		evt.preventDefault();
 		/* // Note: android doesn't populate touches array on touchend
@@ -182,7 +183,6 @@ class Chessdiagram extends Component {
 	}
 
 	_move(x, y) {
-
 		if(this.state.isDragging) {
 			this.setState({dragX: x, dragY: y});
 		}
@@ -225,8 +225,7 @@ class Chessdiagram extends Component {
 	_getPiecesFromFEN() {
 		let pieces = [];
 		let fields = this.props.fen.split(" ", 6);
-
-		let rank=7, file = 0; // (zero-indexed)
+		let rank=7, file = 0; // (zero-based)
 		let x,y,square;
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
@@ -316,7 +315,6 @@ Chessdiagram.propTypes = {
 };
 
 Chessdiagram.defaultProps = {
-
 	width: 'auto',
 	height: 'auto',
 	squareSize: 45,

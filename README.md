@@ -48,7 +48,7 @@ dist: **npm run build** - (output to ./build/dist.chessdiagram.js)
 generate API documentation: **npm run generate-docs**
 
 ####to-do: 
-- deal with Scrolling properly !
+
 - unit tests
 - add a prop for optionally hiding labels etc.
 - show side to move, castling rights and other info
@@ -58,6 +58,7 @@ generate API documentation: **npm run generate-docs**
 
 
 ####recently completed:
+- deal with Scrolling properly !
 - publish to npm (Yippee - it's up there !!)
 - auto API-doc (api.md)
 - webpack setup for distributing as component with demo.

@@ -10,11 +10,31 @@ fs.readdir('./src', function (err, files) {
 		throw err;
 	}
 
+	/*
+	// auto find all js/jsx files (no guarantee of filename order)
 	var jsfiles = files.filter(function(file) {
 		return path.extname(file) === '.js' || path.extname(file) === '.jsx';
 	});
+	*/
+
+	// filenames in specific order:
+	var jsfiles = ['chessdiagram.js', 'board.js', 'piece.js'];
 
 	jsfiles.forEach(function (file, index) {
+
+		// Sync version (to preserve file ordering)
+		try {
+			var data = fs.readFileSync(path.join('./src/',file), 'utf8');
+			var componentInfo = reactDocs.parse(data);
+			var componentName = path.basename(file, path.extname(file));
+			var componentNameCapitalized = componentName[0].toUpperCase() + componentName.slice(1);
+			console.log(generateMarkdown(componentNameCapitalized, componentInfo));
+		} catch (err) {
+			console.log(err);
+		}
+
+		/*
+		// async version
 		fs.readFile(path.join('./src/',file), 'utf8', function (err,data) {
 			if (err)
 				return;
@@ -24,6 +44,8 @@ fs.readdir('./src', function (err, files) {
 
 			console.log(generateMarkdown(componentNameCapitalized, componentInfo));
 		});
+		*/
+
 	});
 });
 

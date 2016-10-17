@@ -190,12 +190,14 @@ class Chessdiagram extends Component {
 
 	_release(x,y) {
 		this.setState({isDragging: false});
-		if(this.props.onMovePiece) {
-			let finalSquare = this._coordsToSquare(x,y);
-			if(this.state.selectedSquare !== finalSquare) {
+		let finalSquare = this._coordsToSquare(x,y);
+		if(finalSquare !== this.state.selectedSquare) {
+			if(this.props.onMovePiece) { // call the callback fn
 				this.props.onMovePiece(this.state.selectedPieceType, this.state.selectedSquare, finalSquare);
 			}
-		}
+			this.setState({selectedSquare: null});
+			return;
+		} 
 	}
 
 	// self-enquiry ////

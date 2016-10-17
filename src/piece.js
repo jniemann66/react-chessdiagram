@@ -43,7 +43,7 @@ SOFTWARE.
 class Piece extends Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return (nextProps.x !== this.props.x || nextProps.y !== this.props.y || nextProps.squareSize !== this.props.squareSize);
+		return (nextProps.x !== this.props.x || nextProps.y !== this.props.y || nextProps.pieceType !== this.props.pieceType || nextProps.squareSize !== this.props.squareSize);
 	}
 
 	render() {

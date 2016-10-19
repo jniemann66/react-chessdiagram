@@ -3,6 +3,8 @@ Chess Diagram React Component
 
 LIVE DEMO: [http://chessdiagram.juddn.com](http://chessdiagram.juddn.com)
 
+NPM: [https://www.npmjs.com/package/react-chessdiagram](https://www.npmjs.com/package/react-chessdiagram)
+
 ![screenshot](./screenshot.PNG)
 
 A react component that can display chess positions from FEN strings or a form of algebraic notation (P@a5 R@h8 etc)

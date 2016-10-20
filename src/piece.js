@@ -310,6 +310,16 @@ class Piece extends Component {
 					</svg>
 				);
 			
+			case '-':
+				return (
+					<svg>
+						{/* blanked square */}
+						<g transform={transformString}>
+							<rect  x="0" y="0" width={45} height={45} fill="black" fillOpacity="0.8" />
+						</g>
+					</svg>
+				);
+
 			default:
 				return (
 					<svg>

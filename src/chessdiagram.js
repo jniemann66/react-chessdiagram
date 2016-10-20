@@ -229,7 +229,7 @@ class Chessdiagram extends Component {
 		let x,y,square;
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
-			if(/[KQRBNPkqrbnp]/.test(c)) {
+			if(/[KQRBNPkqrbnp-]/.test(c)) {
 				[x,y] = this._fileRankToCoords(file, rank);
 				square = String.fromCharCode(97 + file) + (rank + 1).toString();
 				pieces.push({pieceType: c, square: square, x: x, y: y});
@@ -278,6 +278,7 @@ class Chessdiagram extends Component {
 							key={i} pieceType={piece.pieceType} squareSize={this.props.squareSize} 
 						/>
 					)}
+
 				</svg>
 		);
 	}

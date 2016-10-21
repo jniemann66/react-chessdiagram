@@ -62,6 +62,16 @@ class Chessdiagram extends Component {
 		removeEventListener('scroll', this._onScroll.bind(this));
 	}
 	
+	componentWillReceiveProps (nextProps) {
+		if ( /* changes which have an effect on coordinates */
+			nextProps.squareSize !== this.props.squareSize ||
+			nextProps.ranks !== this.props.ranks ||
+			nextProps.files !== this.props.files
+		) {
+				this._getClientPos();
+		}
+	}
+
 	// event handling ////
 	
 	// DOM events

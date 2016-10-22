@@ -68,7 +68,8 @@ class Chessdiagram extends Component {
 			nextProps.ranks !== this.props.ranks ||
 			nextProps.files !== this.props.files
 		) {
-				this._getClientPos();
+				let evt = new Event('resize');
+				dispatchEvent(evt); // synthetically trigger resize event. (Can't get coords in here, because component not rendered yet ...)
 		}
 	}
 
@@ -262,6 +263,7 @@ class Chessdiagram extends Component {
 	// render function
 
 	render() {
+
 		let pieces = this.props.fen ? this._getPiecesFromFEN() : this._getPieces();
 	
 		return (

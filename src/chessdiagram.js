@@ -191,6 +191,10 @@ class Chessdiagram extends Component {
 			dragY: selectedPiece ? selectedPiece.y + this.props.squareSize / 2: this.state.dragY,
 			isDragging: true
 		});
+
+		if(this.props.onSelectSquare) {
+			this.props.onSelectSquare(selectedSquare);
+		}
 	}
 
 	_move(x, y) {
@@ -306,7 +310,8 @@ Chessdiagram.propTypes = {
 	flip: React.PropTypes.bool,
 	/** callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback */
 	onMovePiece: React.PropTypes.func,
-
+	/** callback function which is called when user clicks on a square. Passes name of square as parameter to callback */
+	onSelectSquare: React.PropTypes.func,	
 	/** width of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
 	width: React.PropTypes.oneOfType([
 		React.PropTypes.string,

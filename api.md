@@ -54,6 +54,13 @@ callback function which is called when user moves a piece. Passes pieceType, ini
 type: `func`
 
 
+### `onSelectSquare`
+
+callback function which is called when user clicks on a square. Passes name of square as parameter to callback
+
+type: `custom`
+
+
 ### `pieces`
 
 array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1']

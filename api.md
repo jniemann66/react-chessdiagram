@@ -58,7 +58,7 @@ type: `func`
 
 callback function which is called when user clicks on a square. Passes name of square as parameter to callback
 
-type: `custom`
+type: `func`
 
 
 ### `pieces`

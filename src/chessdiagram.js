@@ -33,7 +33,7 @@ import Piece from './piece.js';
 
 /** Chessdiagram : draws a chess diagram consisting of a board and pieces, using svg graphics */
 class Chessdiagram extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
 			selectedSquare: null,

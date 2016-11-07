@@ -20,6 +20,7 @@ class App extends Component {
 			currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", // starting position
 			flip: false,
 			lastMessage: '',
+			squareSize: 45,
 		};
 	}
 
@@ -60,12 +61,16 @@ class App extends Component {
 					<p> Enter a position (using a FEN string) here:</p>
 					<input type="text" value={this.state.currentPosition} size="70" onChange={this._onPositionChanged.bind(this)} 
 						autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
+					<p> Square Size: </p>
+					<input type="range" value={this.state.squareSize} min={10} max={100} step={1} onChange = {evt => {
+						this.setState({squareSize: Number(evt.target.value)});
+					}}/>
 					<p>Flip Board ?<input type="checkbox" value={this.state.flip} onChange={this._onFlipChanged.bind(this)} /></p>
 					<p>Light Square Color:<input type="color" value={this.state.lightSquareColor} onChange={this._onLightSquareColorChanged.bind(this)} /></p>
 					<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
 					<p/>
 				</div>
-					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={30} 
+					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={this.state.squareSize} 
 						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}/>
 				<p><strong>{this.state.lastMessage}</strong></p>
 			</div>

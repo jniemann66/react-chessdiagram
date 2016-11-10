@@ -2,8 +2,6 @@ import React from 'react';
 //import renderer from 'react-test-renderer';
 import Chessdiagram from '../src/chessdiagram';
 
-console.log('booyah');
-
 import ReactDOM from 'react-dom';
 
 

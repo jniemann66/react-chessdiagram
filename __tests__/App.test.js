@@ -1,7 +1,8 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import Chessdiagram from '../src/chessdiagram';
-import ReactDOM from 'react-dom';
+import Piece from '../src/piece';
+import Board, {Square, RankLabels, FileLabels} from '../src/board';
 import sinon from 'sinon';
 
 const startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -44,7 +45,21 @@ describe('testing interpretation of FEN string', () => {
 	});
 });
 
+describe('testing that elements are being rendered correctly on 8x8 board', () => {
+	it('should return 1 Board, 1 RankLabels component, 1 FileLabels component, 64 Squares, 32 Pieces', () => {
+		
+		const wrapper = mount(
+			<Chessdiagram ref="cd" ranks={8} files={8} fen={startPosition} />
+		);
+		expect(wrapper.find(Board).length).toBe(1);
+		expect(wrapper.find(RankLabels).length).toBe(1);
+		expect(wrapper.find(FileLabels).length).toBe(1);
+		expect(wrapper.find(Square).length).toBe(64);
+		expect(wrapper.find(Piece).length).toBe(32);
 
+		wrapper.unmount();
+	});
+});
 
 describe('When selecting squares at each corner of 8x8 board', () => {
 	it('should return correct names of squares (a1,h1,h8,a8)', () => {
@@ -130,4 +145,3 @@ describe('When moving pawn from e2-e4 on 8x8 board', () => {
 
 	});
 });
-

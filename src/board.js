@@ -189,4 +189,5 @@ Board.defaultProps = {
 	flip: false,
 };
 
+export {Square, SquareHighlight, RankLabels, FileLabels};
 export default Board;

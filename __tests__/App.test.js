@@ -16,7 +16,14 @@ describe('testing interpretation of FEN string', () => {
 			'a8': 'r', 'b8': 'n', 'c8': 'b', 'd8': 'q', 'e8': 'k', 'f8': 'b', 'g8': 'n', 'h8': 'r'
 		}
 
-		const squares = Object.keys(pieces);
+		const occupiedSquares = Object.keys(pieces);
+
+		const emptySquares = [
+			'a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3',
+			'a4', 'b4', 'c4', 'd4', 'e4', 'f4', 'g4', 'h4',
+			'a5', 'b5', 'c5', 'd5', 'e5', 'f5', 'g5', 'h5',
+			'a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6',
+		]
 
 		const wrapper = mount(
 			<Chessdiagram ref="cd" ranks={8} files={8} fen={startPosition} />
@@ -26,8 +33,12 @@ describe('testing interpretation of FEN string', () => {
 		console.log(instance._getPieceAtSquare('d4'));
 
 
-		squares.map((sq)=>{
+		occupiedSquares.map((sq) => {
 			expect(instance._getPieceAtSquare(sq).pieceType).toBe(pieces[sq]);
+		});
+
+		emptySquares.map((sq) => {
+			expect(instance._getPieceAtSquare(sq)).toBe(undefined);
 		});
 
 		wrapper.unmount();

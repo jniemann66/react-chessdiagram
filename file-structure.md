@@ -23,7 +23,7 @@ File | Description | Comments
  generateMarkdown.js | JSON-Markdown converter |
  LICENSE | license file |
  package.json | npm package config | npm configuration for project
- README.md | main README | This file
+ README.md | main README | main documentation for project
  screenshot.PNG | screenshot | screenshot of demo, showing the component
  webpack.config.js | webpack dist config | configures webpack for the output of **build/dist.chessdiagram.js**
  webpack.dev.config.js | webpack dev config | configures webpack for the output of **build/dev.chessdiagram.js**

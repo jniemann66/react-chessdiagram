@@ -30,8 +30,6 @@ describe('testing interpretation of FEN string', () => {
 		);
 
 		let instance = wrapper.instance();
-		console.log(instance._getPieceAtSquare('d4'));
-
 
 		occupiedSquares.map((sq) => {
 			expect(instance._getPieceAtSquare(sq).pieceType).toBe(pieces[sq]);

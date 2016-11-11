@@ -45,7 +45,7 @@ describe('testing interpretation of FEN string', () => {
 	});
 });
 
-describe('testing that elements are being rendered correctly on 8x8 board', () => {
+describe('testing for elements being rendered correctly on 8x8 board', () => {
 	it('should return 1 Board, 1 RankLabels component, 1 FileLabels component, 64 Squares, 32 Pieces', () => {
 		
 		const wrapper = mount(

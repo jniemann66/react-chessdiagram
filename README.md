@@ -49,6 +49,8 @@ dist: **npm run build** - (output to ./build/dist.chessdiagram.js)
 
 generate API documentation: **npm run generate-docs**
 
+testing: **npm test**
+
 #### to-do: 
 
 - add a prop for optionally hiding labels etc.

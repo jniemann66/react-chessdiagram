@@ -1,8 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-//import renderer from 'react-test-renderer'; // broken with React 15.3.2 ?
 import Chessdiagram from '../src/chessdiagram';
-
 import ReactDOM from 'react-dom';
 import sinon from 'sinon';
 
@@ -59,7 +57,7 @@ describe('When selecting squares at each corner of 8x8 board', () => {
 });
 
 describe('When moving pawn from e2-e4 on 8x8 board', () => {
-	it('should return piece and names of squares (p,e2,e4)', () => {
+	it('should return piece and names of squares (P,e2,e4)', () => {
 		let spyMovePiece = sinon.spy();
 		
 		const wrapper = mount(

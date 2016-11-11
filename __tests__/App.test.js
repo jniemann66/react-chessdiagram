@@ -2,7 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import Chessdiagram from '../src/chessdiagram';
 import Piece from '../src/piece';
-import Board, {Square, RankLabels, FileLabels} from '../src/board';
+import Board from '../src/board';
 import sinon from 'sinon';
 
 const startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";

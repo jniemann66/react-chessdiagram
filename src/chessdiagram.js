@@ -76,11 +76,11 @@ class Chessdiagram extends Component {
 	// event handling ////
 	
 	// DOM events
-	_onResize(evt) {
+	_onResize() {
 		this._getClientPos();
 	}
 
-	_onScroll(evt) {
+	_onScroll() {
 		this._getClientPos();
 	}
 
@@ -226,7 +226,7 @@ class Chessdiagram extends Component {
 		if(!this.props.pieces)
 			return [];
 
-		return this.props.pieces.map((pieceString,i) => {
+		return this.props.pieces.map((pieceString) => {
 			let [pieceType, square ] = pieceString.split('@',2);	// split 'piece@square' into pieceType, square
 			if(!square)
 				return {pieceType: 'invalid', square: 'none', x: 0,y: 0}; // guard against nonsense input

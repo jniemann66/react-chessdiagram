@@ -2,8 +2,21 @@ var fs = require('fs');
 var path = require('path');
 var generateMarkdown = require('./generateMarkdown.js');
 
+
 var src = './src';
 var reactDocs = require('react-docgen');
+
+/* trying to use alternative resolver (to accept multiple exported components)
+
+// find the react-docgen resolver module:
+var resolver = require(
+	path.join(
+		path.dirname(require.resolve('react-docgen')),
+		'resolver',
+		'findAllComponentDefinitions'
+		)
+).default;
+*/
 
 fs.readdir('./src', function (err, files) {
 	if (err) {
@@ -25,7 +38,7 @@ fs.readdir('./src', function (err, files) {
 		// Sync version (to preserve file ordering)
 		try {
 			var data = fs.readFileSync(path.join('./src/',file), 'utf8');
-			var componentInfo = reactDocs.parse(data);
+			var componentInfo = reactDocs.parse(data /* , resolver */);
 			var componentName = path.basename(file, path.extname(file));
 			var componentNameCapitalized = componentName[0].toUpperCase() + componentName.slice(1);
 			console.log(generateMarkdown(componentNameCapitalized, componentInfo));

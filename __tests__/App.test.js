@@ -46,15 +46,12 @@ describe('testing interpretation of FEN string', () => {
 });
 
 describe('testing for elements being rendered correctly on 8x8 board', () => {
-	it('should return 1 Board, 1 RankLabels component, 1 FileLabels component, 64 Squares, 32 Pieces', () => {
+	it('should return 1 Board, 32 Pieces', () => {
 		
 		const wrapper = mount(
 			<Chessdiagram ref="cd" ranks={8} files={8} fen={startPosition} />
 		);
 		expect(wrapper.find(Board).length).toBe(1);
-		expect(wrapper.find(RankLabels).length).toBe(1);
-		expect(wrapper.find(FileLabels).length).toBe(1);
-		expect(wrapper.find(Square).length).toBe(64);
 		expect(wrapper.find(Piece).length).toBe(32);
 
 		wrapper.unmount();

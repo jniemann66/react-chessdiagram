@@ -92,21 +92,3 @@ describe('When moving pawn from e2-e4 on 8x8 board', () => {
 
 	});
 });
-
-
-
-
-
-
-
-/*
-
-describe('Welcome (Snapshot)', () => {
-  it('Welcome renders hello world', () => {
-    const component = renderer.create(<Chessdiagram />);
-    const json = component.toJSON();
-    expect(json).toMatchSnapshot();
-  });
-});
-
-*/

@@ -16,7 +16,7 @@ describe('testing interpretation of FEN string', () => {
 			'a8': 'r', 'b8': 'n', 'c8': 'b', 'd8': 'q', 'e8': 'k', 'f8': 'b', 'g8': 'n', 'h8': 'r'
 		}
 
-		const posKeys = Object.keys(pieces);
+		const squares = Object.keys(pieces);
 
 		const wrapper = mount(
 			<Chessdiagram ref="cd" ranks={8} files={8} fen={startPosition} />
@@ -26,11 +26,9 @@ describe('testing interpretation of FEN string', () => {
 		console.log(instance._getPieceAtSquare('d4'));
 
 
-		posKeys.map((sq)=>{
+		squares.map((sq)=>{
 			expect(instance._getPieceAtSquare(sq).pieceType).toBe(pieces[sq]);
 		});
-
-	
 
 		wrapper.unmount();
 

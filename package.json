@@ -16,6 +16,7 @@
     "enzyme": "^2.6.0",
     "eslint": "^3.8.0",
     "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-react": "^6.6.0",
     "jest": "^17.0.0",
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",

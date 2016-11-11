@@ -2,11 +2,10 @@ var fs = require('fs');
 var path = require('path');
 var generateMarkdown = require('./generateMarkdown.js');
 
-
 var src = './src';
 var reactDocs = require('react-docgen');
 
-/* trying to use alternative resolver (to accept multiple exported components)
+/* attempt to use alternative resolver (to accept multiple exported components)
 
 // find the react-docgen resolver module:
 var resolver = require(
@@ -61,4 +60,3 @@ fs.readdir('./src', function (err, files) {
 
 	});
 });
-

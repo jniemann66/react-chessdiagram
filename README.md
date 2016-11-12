@@ -1,7 +1,7 @@
+[![Build Status](https://travis-ci.org/jniemann66/react-chessdiagram.svg?branch=master)](https://travis-ci.org/jniemann66/react-chessdiagram)
+
 # react-chessdiagram
 Chess Diagram React Component
-
-[![Build Status](https://travis-ci.org/jniemann66/react-chessdiagram.svg?branch=master)](https://travis-ci.org/jniemann66/react-chessdiagram)
 
 LIVE DEMO: [http://chessdiagram.juddn.com](http://chessdiagram.juddn.com)
 

@@ -37,8 +37,11 @@
   },
   "keywords": [
     "chess",
-    "chess GUI",
-    "react"
+    "chessboard",
+    "react",
+		"FEN",
+		"diagram",
+		"board"
   ],
   "author": "Judd Niemann",
   "license": "MIT",

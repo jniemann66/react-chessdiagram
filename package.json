@@ -1,6 +1,6 @@
 {
   "name": "react-chessdiagram",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "chess diagram react component",
   "main": "./build/dist.chessdiagram.js",
   "dependencies": {
@@ -37,8 +37,11 @@
   },
   "keywords": [
     "chess",
-    "chess GUI",
-    "react"
+    "chessboard",
+    "react",
+    "FEN",
+    "diagram",
+    "board"
   ],
   "author": "Judd Niemann",
   "license": "MIT",

@@ -23,9 +23,9 @@ API documentation: [./api.md](./api.md)
 	import ReactDOM from 'react-dom';	
     import Chessdiagram from 'react-chessdiagram';
 	
-	const lightSquareColor = "#2492FF"; // light blue
-	const darkSquareColor = "#005EBB"; // dark blue
-	const currentPosition =  "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"; // starting position
+	const lightSquareColor = '#2492FF'; // light blue
+	const darkSquareColor = '#005EBB'; // dark blue
+	const currentPosition =  'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'; // starting position
 	const flip = false;
 	const squareSize = 30;
 
@@ -36,7 +36,7 @@ API documentation: [./api.md](./api.md)
 	);
 
 	function onMovePiece(piece, fromSquare, toSquare) {
-		let message = 'You moved ' + piece + fromSquare + " to " + toSquare + ' !';
+		let message = 'You moved ' + piece + fromSquare + ' to ' + toSquare + ' !';
 		console.log(message);
 	}
 

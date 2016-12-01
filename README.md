@@ -58,7 +58,7 @@ testing: **npm test** (testing is implemented with Jest, Enzyme, and sinon)
 - show side to move, castling rights and other info
 - show arrows etc
 - handle remaining 5 FEN fields etc
-- more piece types
+- more piece types (checkers ? fairy chess ?)
 
 
 ### recently completed:

@@ -9,7 +9,7 @@ Knight's Tour Demo: [http://knightstour.juddn.com](http://knightstour.juddn.com)
 
 NPM: [https://www.npmjs.com/package/react-chessdiagram](https://www.npmjs.com/package/react-chessdiagram)
 
-![screenshot](./screenshot.PNG)
+![screenshot](https://github.com/jniemann66/react-chessdiagram/blob/master/screenshot.PNG)
 
 A react component that can display chess positions from FEN strings or a form of algebraic notation (P@a5 R@h8 etc)
 
@@ -17,7 +17,7 @@ It is almost entirely stateless. (some state is maintained to keep track of mous
 
 A callback facility is provided to report dragged pieces back to the host application.
 
-API documentation: [./api.md](./api.md)
+API documentation: [./api.md](https://github.com/jniemann66/react-chessdiagram/blob/master/api.md)
 
 ### sample usage
 

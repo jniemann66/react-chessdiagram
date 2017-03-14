@@ -7,5 +7,6 @@
 		"editor.insertSpaces": false,
 
 		// When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
-		"editor.detectIndentation": false
-}
+		"editor.detectIndentation": false,
+		"vsicons.presets.angular": false
+	}

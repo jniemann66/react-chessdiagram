@@ -1,5 +1,3 @@
-// chessdiagram.js : defines Chess Diagram Component
-
 /* 
 
 MIT License
@@ -25,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+
+// chessdiagram.js : defines Chess Diagram Component
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';

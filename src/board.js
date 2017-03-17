@@ -1,4 +1,4 @@
-/* 
+/*
 
 MIT License
 
@@ -29,7 +29,7 @@ import React, { Component } from 'react';
 
 class Square extends Component {
 	render() {
-		let fillColor = this.props.light ? this.props.lightSquareColor : this.props.darkSquareColor; 
+		let fillColor = this.props.light ? this.props.lightSquareColor : this.props.darkSquareColor;
 		return <rect x={this.props.x} y={this.props.y} width={this.props.squareSize} height={this.props.squareSize} stroke="black" fill={fillColor} strokeWidth="1" />;
 	}
 }
@@ -65,7 +65,7 @@ class RankLabels extends Component {
 
 		return (
 			<g>
-				{rankLabels.map((rankLabel, i) => 
+				{rankLabels.map((rankLabel, i) =>
 					<text x={this.props.squareSize / 2} y={rankLabel.y} key={i} fontFamily="Verdana" fontSize={this.props.squareSize / 3} textAnchor="middle">
 						{rankLabel.label}
 					</text>)}
@@ -86,7 +86,7 @@ class FileLabels extends Component {
 
 		return (
 			<g>
-				{fileLabels.map((fileLabel, i) => 
+				{fileLabels.map((fileLabel, i) =>
 					<text x={fileLabel.x} y={this.props.squareSize / 2 + this.props.ranks * this.props.squareSize} key={i} fontFamily="Verdana" fontSize={this.props.squareSize / 3} textAnchor="middle">
 						{fileLabel.label}
 					</text>)}
@@ -154,10 +154,10 @@ class Board extends Component {
 			[selectedSquareX, selectedSquareY] = this._squareToCoords(this.props.selectedSquare);
 		}
 		return (
-			
+
 			<svg>
-				{squares.map((square,i) => 
-					<Square 
+				{squares.map((square,i) =>
+					<Square
 						x={square.x} y={square.y} key={i} light={square.light} squareSize={this.props.squareSize}
 						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor}
 					/>
@@ -167,26 +167,26 @@ class Board extends Component {
 				<FileLabels ranks={this.props.ranks} files={this.props.files} squareSize={this.props.squareSize} flip={this.props.flip}/>
 				{(() => this.props.selectedSquare ? <SquareHighlight x={selectedSquareX} y={selectedSquareY} squareSize={this.props.squareSize}/> : <g/> )()}
 			</svg>
-		);			
+		);
 	}
 }	
 
 Board.propTypes = {
-	squareSize: React.PropTypes.number,
-	ranks: React.PropTypes.number,
-	files: React.PropTypes.number,
-	lightSquareColor: React.PropTypes.string,
 	darkSquareColor: React.PropTypes.string,
+	files: React.PropTypes.number,
 	flip: React.PropTypes.bool,
+	lightSquareColor: React.PropTypes.string,
+	ranks: React.PropTypes.number,
+	squareSize: React.PropTypes.number,
 };
 
 Board.defaultProps = {
-	squareSize: 45,
-	ranks: 8,
-	files: 8,
-	lightSquareColor: "#2492FF",
 	darkSquareColor:  "#005EBB",
+	files: 8,
 	flip: false,
+	lightSquareColor: "#2492FF",
+	ranks: 8,
+	squareSize: 45,
 };
 
 export default Board;

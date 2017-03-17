@@ -1,4 +1,4 @@
-/* 
+/*
 
 MIT License
 
@@ -30,6 +30,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Board from './board.js';
 import Piece from './piece.js';
+import standardPieceDefinitions from './pieceDefinitions.js';
 
 /** Chessdiagram : draws a chess diagram consisting of a board and pieces, using svg graphics */
 class Chessdiagram extends Component {
@@ -61,7 +62,7 @@ class Chessdiagram extends Component {
 		removeEventListener('resize', this._onResize.bind(this));
 		removeEventListener('scroll', this._onScroll.bind(this));
 	}
-	
+
 	componentWillReceiveProps (nextProps) {
 		if ( /* changes which have an effect on coordinates */
 			nextProps.squareSize !== this.props.squareSize ||
@@ -74,7 +75,7 @@ class Chessdiagram extends Component {
 	}
 
 	// event handling ////
-	
+
 	// DOM events
 	_onResize() {
 		this._getClientPos();
@@ -157,7 +158,7 @@ class Chessdiagram extends Component {
 		}
 	}
 
-	_coordsToSquare (x,y) { // convert coordinates to square name (eg e4)
+	_coordsToSquare(x,y) { // convert coordinates to square name (eg e4)
 		if(this.props.flip) {
 			let file = String.fromCharCode(97 + this.props.files - x / this.props.squareSize + 1);
 			let rank = 1 + Math.floor(y / this.props.squareSize);
@@ -172,15 +173,12 @@ class Chessdiagram extends Component {
 	// private actions
 
 	_grab(x,y) {
-	
 		let boardW = this.props.squareSize * (1+this.props.files);
 		let boardH = this.props.squareSize * (this.props.ranks);
-		
 		if(x < this.props.squareSize || x > boardW || y < 0 || y > boardH) {
 			//outside the board ...
 			return false;
 		}
-
 		let selectedSquare = this._coordsToSquare(x,y);
 		let selectedPiece = this._getPieceAtSquare(selectedSquare);
 
@@ -212,7 +210,7 @@ class Chessdiagram extends Component {
 			}
 			this.setState({selectedSquare: null});
 			return;
-		} 
+		}
 	}
 
 	// self-enquiry ////
@@ -240,11 +238,13 @@ class Chessdiagram extends Component {
 	_getPiecesFromFEN() {
 		let pieces = [];
 		let fields = this.props.fen.split(" ", 6);
-		let rank=7, file = 0; // (zero-based)
+		let rank=this.props.ranks-1, file = 0; // (zero-based)
 		let x,y,square;
+		const pieceDefinitions = Object.assign(standardPieceDefinitions, this.props.pieceDefinitions);
+		const pieceChars = Object.keys(pieceDefinitions);
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
-			if(/[KQRBNPkqrbnp-]/.test(c)) {
+			if(pieceChars.includes(c)) {
 				[x,y] = this._fileRankToCoords(file, rank);
 				square = String.fromCharCode(97 + file) + (rank + 1).toString();
 				pieces.push({pieceType: c, square: square, x: x, y: y});
@@ -252,9 +252,9 @@ class Chessdiagram extends Component {
 			} else if (c === "/") {
 				rank -= 1;
 				file = 0;
-			}	else if(/[1-8]/.test(c)) {
+			}	else if(/[1-9]/.test(c)) {
 				file += Number(c);
-			} 
+			}
 		}
 		return pieces;
 	}
@@ -267,11 +267,10 @@ class Chessdiagram extends Component {
 	// render function
 
 	render() {
-
 		let pieces = this.props.fen ? this._getPiecesFromFEN() : this._getPieces();
-	
+		const pieceDefinitions = Object.assign(standardPieceDefinitions, this.props.pieceDefinitions);
 		return (
-				<svg 
+				<svg
 					width={this.props.width === "auto" ? (1 + this.props.files) * this.props.squareSize : this.props.width}
 					height={this.props.height === "auto" ? (1 + this.props.ranks) * this.props.squareSize : this.props.height}
 					onMouseDown={this._onMouseDown.bind(this)}
@@ -279,19 +278,20 @@ class Chessdiagram extends Component {
 					onMouseMove={this._onMouseMove.bind(this)}
 					onTouchMove={this._onTouchMove.bind(this)}
 					onMouseUp={this._onMouseUp.bind(this)}
-					onTouchEnd={this._onTouchEnd.bind(this)}	
+					onTouchEnd={this._onTouchEnd.bind(this)}
 				>
-					
-					<Board 
+
+					<Board	
 						squareSize={this.props.squareSize} ranks={this.props.ranks} files={this.props.files} selectedSquare={this.state.selectedSquare}
 						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor} flip={!!this.props.flip}
 					/>
-					
-					{pieces.map((piece, i) => 
-						<Piece 
+
+					{pieces.map((piece, i) =>
+						<Piece
 							x={this.state.isDragging && piece.square === this.state.selectedSquare ? this.state.dragX - this.props.squareSize / 2 : piece.x}
-							y={this.state.isDragging && piece.square === this.state.selectedSquare ? this.state.dragY - this.props.squareSize / 2 : piece.y} 
-							key={i} pieceType={piece.pieceType} squareSize={this.props.squareSize} 
+							y={this.state.isDragging && piece.square === this.state.selectedSquare ? this.state.dragY - this.props.squareSize / 2 : piece.y}
+							key={i} pieceType={piece.pieceType} squareSize={this.props.squareSize}
+							drawPiece={pieceDefinitions[piece.pieceType]}
 						/>
 					)}
 
@@ -306,12 +306,12 @@ Chessdiagram.propTypes = {
 	files: React.PropTypes.number,
 	lightSquareColor: React.PropTypes.string,
 	darkSquareColor: React.PropTypes.string,
-	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */ 
+	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */
 	flip: React.PropTypes.bool,
 	/** callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback */
 	onMovePiece: React.PropTypes.func,
 	/** callback function which is called when user clicks on a square. Passes name of square as parameter to callback */
-	onSelectSquare: React.PropTypes.func,	
+	onSelectSquare: React.PropTypes.func,
 	/** width of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
 	width: React.PropTypes.oneOfType([
 		React.PropTypes.string,
@@ -327,9 +327,12 @@ Chessdiagram.propTypes = {
 	fen: React.PropTypes.string,
 
 	/** array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1']
-	 * This format may be more suitable for unconventional board dimensions, for which standard FEN would not work 
+	 * This format may be more suitable for unconventional board dimensions, for which standard FEN would not work
 	 * Note: If both fen and pieces props are present, fen will take precedence */
 	pieces: React.PropTypes.array,
+	/** Optional associative array containing non-standard chess characters
+	*/
+	pieceDefinitions: React.PropTypes.object,
 };
 
 Chessdiagram.defaultProps = {
@@ -341,6 +344,7 @@ Chessdiagram.defaultProps = {
 	lightSquareColor: "#2492FF",
 	darkSquareColor:  "#005EBB",
 	flip: false,
+	pieceDefinitions: {},
 };
 
 export default Chessdiagram;

@@ -142,3 +142,19 @@ describe('When moving pawn from e2-e4 on 8x8 board', () => {
 
 	});
 });
+
+describe('testing for custom pieces being rendered correctly on 8x8 board', () => {
+	it('should return 1 Board, 33 Pieces', () => {
+
+		const wrapper = mount(
+			<Chessdiagram ref="cd" ranks={8} files={8}
+			fen={"rnbqkbnr/pppppppp/a7/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
+			pieceDefinitions={{'a': (transformString) => (<image transform={transformString} height={45} width={45} href={"https://upload.wikimedia.org/wikipedia/commons/d/d0/Guard_%28an_icon_of_the_chess_piece%29_Classical_Version.png"}></image>)}}
+			/>
+		);
+		expect(wrapper.find(Board).length).toBe(1);
+		expect(wrapper.find(Piece).length).toBe(33);
+
+		wrapper.unmount();
+	});
+});

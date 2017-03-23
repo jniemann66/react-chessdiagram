@@ -241,7 +241,7 @@ class Chessdiagram extends Component {
 		let rank=this.props.ranks-1, file = 0; // (zero-based)
 		let x,y,square;
 		const pieceDefinitions = Object.assign(standardPieceDefinitions, this.props.pieceDefinitions);
-		const pieceChars = new RegExp('[' + Object.keys(pieceDefinitions).join('') + ']');
+		const pieceChars = new RegExp('[' + Object.keys(pieceDefinitions).join('').replace('-', '\\-') + ']');
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
 			if(pieceChars.test(c)) {

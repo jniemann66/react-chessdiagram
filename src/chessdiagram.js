@@ -241,10 +241,10 @@ class Chessdiagram extends Component {
 		let rank=this.props.ranks-1, file = 0; // (zero-based)
 		let x,y,square;
 		const pieceDefinitions = Object.assign(standardPieceDefinitions, this.props.pieceDefinitions);
-		const pieceChars = Object.keys(pieceDefinitions);
+		const pieceChars = new RegExp('[' + Object.keys(pieceDefinitions).join('') + ']');
 		for (let i = 0; i<fields[0].length; i++) {
 			let c = fields[0].charAt(i);
-			if(pieceChars.includes(c)) {
+			if(pieceChars.test(c)) {
 				[x,y] = this._fileRankToCoords(file, rank);
 				square = String.fromCharCode(97 + file) + (rank + 1).toString();
 				pieces.push({pieceType: c, square: square, x: x, y: y});
@@ -281,7 +281,7 @@ class Chessdiagram extends Component {
 					onTouchEnd={this._onTouchEnd.bind(this)}
 				>
 
-					<Board	
+					<Board
 						squareSize={this.props.squareSize} ranks={this.props.ranks} files={this.props.files} selectedSquare={this.state.selectedSquare}
 						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor} flip={!!this.props.flip}
 					/>

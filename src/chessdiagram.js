@@ -27,7 +27,6 @@ SOFTWARE.
 // chessdiagram.js : defines Chess Diagram Component
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Board from './board.js';
 import Piece from './piece.js';
 import standardPieceDefinitions from './pieceDefinitions.js';
@@ -216,7 +215,7 @@ class Chessdiagram extends Component {
 	// self-enquiry ////
 
 	_getClientPos() {
-		let rect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+		let rect = this.refs.client.getBoundingClientRect();
 		this.setState({left: rect.left, top: rect.top, width: rect.width, height: rect.height});
 	}
 
@@ -279,6 +278,7 @@ class Chessdiagram extends Component {
 					onTouchMove={this._onTouchMove.bind(this)}
 					onMouseUp={this._onMouseUp.bind(this)}
 					onTouchEnd={this._onTouchEnd.bind(this)}
+					ref={"client"}
 				>
 
 					<Board

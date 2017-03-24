@@ -26,7 +26,6 @@ SOFTWARE.
 
 import React, { Component } from 'react';
 import './piece.css';
-import PieceDefs from './pieceDefinitions';
 
 /** Piece: renders an svg chess piece of a given type and position */
 class Piece extends Component {
@@ -42,12 +41,14 @@ class Piece extends Component {
 	}
 }
 
+// TODO: remove pieceType, only check to see if drawPiece has changed in shouldComponentUpdate
 Piece.propTypes = {
+	drawPiece: React.PropTypes.func.isRequired,
+	pieceType: React.PropTypes.string.isRequired,
+	squareSize: React.PropTypes.number.isRequired,
 	x: React.PropTypes.number.isRequired,
 	y: React.PropTypes.number.isRequired,
 	/** recognized piece types: K,Q,R,B,N,P,k,q,r,b,n,p */
-	pieceType: React.PropTypes.string.isRequired,
-	drawPiece: React.PropTypes.func.isRequired
 };
 
 export default Piece;

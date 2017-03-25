@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';	
+import ReactDOM from 'react-dom';
 import Chessdiagram from '../src/chessdiagram.js';
 
 import './App.css';
@@ -21,7 +21,22 @@ class App extends Component {
 			flip: false,
 			lastMessage: '',
 			squareSize: 45,
+			draughts: false,
 		};
+		this.draughtsPieceDefinitions = {
+			'G': (transformString) => (
+				<svg>
+					<image transform={transformString} href="https://upload.wikimedia.org/wikipedia/commons/9/90/Draughts_mlt45.svg" />
+				</svg>
+			),
+			'g': (transformString) => (
+				<svg>
+					<image transform={transformString} href="https://upload.wikimedia.org/wikipedia/commons/0/0c/Draughts_mdt45.svg" />
+				</svg>
+			)
+		};
+		this.draughtsFen = "g1g1g1g1/1g1g1g1g/g1g1g1g1/8/8/1G1G1G1G/G1G1G1G1/1G1G1G1G w KQkq - 0 1";
+		this.standardFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	}
 
 // event handlers:
@@ -42,13 +57,18 @@ class App extends Component {
 		this.setState({darkSquareColor: evt.target.value});
 	}
 
+	_onDraughtsChanged(evt) {
+		const position = evt.target.checked ? this.draughtsFen : this.standardFen;
+		this.setState({currentPosition: position,   draughts: evt.target.checked})
+	}
+
 	_onMovePiece(piece, fromSquare, toSquare) { // user moved a piece
 		// echo move back to user:
 		let message = 'You moved ' + piece + fromSquare + " to " + toSquare + ' !';
 		this.setState({lastMessage: message}, (()=> {
 			setTimeout(()=> {
-					this.setState({lastMessage: ''}); 
-			}, 2000); // clear message after 2s	
+					this.setState({lastMessage: ''});
+			}, 2000); // clear message after 2s
 		}));
 	}
 
@@ -59,19 +79,22 @@ class App extends Component {
 				<h1>Chess Diagram</h1>
 				<div>
 					<p> Enter a position (using a FEN string) here:</p>
-					<input type="text" value={this.state.currentPosition} size="70" onChange={this._onPositionChanged.bind(this)} 
+					<input type="text" value={this.state.currentPosition} size="70" onChange={this._onPositionChanged.bind(this)}
 						autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
 					<p> Square Size: </p>
 					<input type="range" value={this.state.squareSize} min={10} max={100} step={1} onChange = {evt => {
 						this.setState({squareSize: Number(evt.target.value)});
 					}}/>
 					<p>Flip Board ?<input type="checkbox" value={this.state.flip} onChange={this._onFlipChanged.bind(this)} /></p>
+					<p>Draughts ?<input type="checkbox" value={this.state.draughts} onChange={this._onDraughtsChanged.bind(this)} /></p>
 					<p>Light Square Color:<input type="color" value={this.state.lightSquareColor} onChange={this._onLightSquareColorChanged.bind(this)} /></p>
 					<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
 					<p/>
 				</div>
-					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={this.state.squareSize} 
-						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}/>
+					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={this.state.squareSize}
+						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}
+						pieceDefinitions={this.state.draughts ? this.draughtsPieceDefinitions : {}}
+					/>
 				<p><strong>{this.state.lastMessage}</strong></p>
 			</div>
     );

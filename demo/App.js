@@ -22,6 +22,8 @@ class App extends Component {
 			lastMessage: '',
 			squareSize: 45,
 			draughts: false,
+			ranks: 8,
+			files: 8
 		};
 		this.draughtsPieceDefinitions = {
 			'G': (transformString) => (
@@ -72,6 +74,14 @@ class App extends Component {
 		}));
 	}
 
+	_onFilesChanged(evt) {
+		this.setState({files: Number(evt.target.value)});
+	}
+
+	_onRanksChanged(evt) {
+		this.setState({ranks: Number(evt.target.value)});
+	}
+
 // the render() function:
   render() {
     return (
@@ -89,10 +99,13 @@ class App extends Component {
 					<p>Draughts ?<input type="checkbox" value={this.state.draughts} onChange={this._onDraughtsChanged.bind(this)} /></p>
 					<p>Light Square Color:<input type="color" value={this.state.lightSquareColor} onChange={this._onLightSquareColorChanged.bind(this)} /></p>
 					<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
+					<p>Ranks:<input type="text" value={this.state.ranks} onChange={this._onRanksChanged.bind(this)} /></p>
+					<p>Files:<input type="text" value={this.state.files} onChange={this._onFilesChanged.bind(this)} /></p>
 					<p/>
 				</div>
 					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={this.state.squareSize}
 						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}
+						ranks={this.state.ranks} files={this.state.files}
 						pieceDefinitions={this.state.draughts ? this.draughtsPieceDefinitions : {}}
 					/>
 				<p><strong>{this.state.lastMessage}</strong></p>

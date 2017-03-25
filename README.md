@@ -60,14 +60,20 @@ testing: **npm test** (testing is implemented with Jest, Enzyme, and sinon)
 - show side to move, castling rights and other info
 - show arrows etc
 - handle remaining 5 FEN fields etc
-- more piece types (checkers ? fairy chess ?)
 
 
 ### recently completed:
+- Ability to define custom piece types and their corresponding FEN characters
 - Test suite
 - deal with Scrolling properly !
 - publish to npm (Yippee - it's up there !!)
 - auto API-doc (api.md)
 - webpack setup for distributing as component with demo.
+
+### Contributors:
+
+[Judd Niemann](https://github.com/jniemann66/react-chessdiagram/commits/master?author=jniemann66) 
+
+[Stephen Van Gordon](https://github.com/jniemann66/react-chessdiagram/commits/master?author=svangordon)
 
 

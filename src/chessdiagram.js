@@ -326,9 +326,9 @@ Chessdiagram.propTypes = {
 	/** Chess position in FEN format (Forsyth-Edwards Notation). eg "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" */
 	fen: React.PropTypes.string,
 
-	/** array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1']
-	 * This format may be more suitable for unconventional board dimensions, for which standard FEN would not work
-	 * Note: If both fen and pieces props are present, fen will take precedence */
+	/** array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1'].
+	 * This format may be more suitable for unconventional board dimensions, for which standard FEN would not work.
+	 * Note: If both FEN and pieces props are present, FEN will take precedence */
 	pieces: React.PropTypes.array,
 	/** Optional associative array containing non-standard chess characters
 	*/

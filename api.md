@@ -61,11 +61,19 @@ callback function which is called when user clicks on a square. Passes name of s
 type: `func`
 
 
+### `pieceDefinitions`
+
+Optional associative array containing non-standard chess characters
+
+type: `object`
+defaultValue: `{}`
+
+
 ### `pieces`
 
-array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1']
-This format may be more suitable for unconventional board dimensions, for which standard FEN would not work 
-Note: If both fen and pieces props are present, fen will take precedence
+array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1'].
+This format may be more suitable for unconventional board dimensions, for which standard FEN would not work.
+Note: If both FEN and pieces props are present, FEN will take precedence
 
 type: `array`
 
@@ -141,6 +149,11 @@ Piece: renders an svg chess piece of a given type and position
 
 Props
 -----
+
+### `drawPiece` (required)
+
+type: `func`
+
 
 ### `pieceType` (required)
 

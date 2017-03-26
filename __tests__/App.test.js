@@ -47,7 +47,7 @@ describe('testing interpretation of FEN string', () => {
 
 describe('testing for elements being rendered correctly on 8x8 board', () => {
 	it('should return 1 Board, 32 Pieces', () => {
-		
+
 		const wrapper = mount(
 			<Chessdiagram ref="cd" ranks={8} files={8} fen={startPosition} />
 		);
@@ -157,4 +157,26 @@ describe('testing for custom pieces being rendered correctly on 8x8 board', () =
 
 		wrapper.unmount();
 	});
+});
+
+describe('testing non-standard board widths', () => {
+	it('should return 4 squares on 2x2', () => {
+		const wrapper = mount(
+			<Chessdiagram ref="cd" ranks={2} files={2}
+				fen={"2/2 w - - 0 1"}
+			/>
+		);
+		expect(wrapper.find('Square').length).toBe(4);
+	});
+
+	it('should return 144 squares on 12x12', () => {
+		const wrapper = mount(
+			<Chessdiagram ref="cd" ranks={12} files={12}
+				fen={"93/93/93/93/93/93/93/93/93/93/93/93 w - - 0 1"}
+			/>
+		);
+		// Aside: `expect(wrapper.find('Square')).toHaveLength(144)` should work, and it doesn't.
+		// Not totally sure why expect is returning an object w/o all of the standard Jest matchers
+		expect(wrapper.find('Square').length).toBe(144);
+	})
 });

@@ -106,37 +106,42 @@ Board : draws a chess board with given square size, square colors, and number of
 Props
 -----
 
-### `darkSquareColor`
+### `darkSquareColor` (required)
 
 type: `string`
 defaultValue: `"#005EBB"`
 
 
-### `files`
+### `files` (required)
 
 type: `number`
 defaultValue: `8`
 
 
-### `flip`
+### `flip` (required)
 
 type: `bool`
 defaultValue: `false`
 
 
-### `lightSquareColor`
+### `lightSquareColor` (required)
 
 type: `string`
 defaultValue: `"#2492FF"`
 
 
-### `ranks`
+### `ranks` (required)
 
 type: `number`
 defaultValue: `8`
 
 
-### `squareSize`
+### `selectedSquare`
+
+type: `string`
+
+
+### `squareSize` (required)
 
 type: `number`
 defaultValue: `45`
@@ -157,9 +162,12 @@ type: `func`
 
 ### `pieceType` (required)
 
-recognized piece types: K,Q,R,B,N,P,k,q,r,b,n,p
-
 type: `string`
+
+
+### `squareSize` (required)
+
+type: `number`
 
 
 ### `x` (required)

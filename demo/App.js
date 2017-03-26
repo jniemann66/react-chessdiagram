@@ -21,22 +21,49 @@ class App extends Component {
 			flip: false,
 			lastMessage: '',
 			squareSize: 45,
-			draughts: false,
+			gameType: 'chess',
+			ranks: 8,
+			files: 8
 		};
-		this.draughtsPieceDefinitions = {
-			'G': (transformString) => (
-				<svg>
-					<image transform={transformString} href="https://upload.wikimedia.org/wikipedia/commons/9/90/Draughts_mlt45.svg" />
-				</svg>
-			),
-			'g': (transformString) => (
-				<svg>
-					<image transform={transformString} href="https://upload.wikimedia.org/wikipedia/commons/0/0c/Draughts_mdt45.svg" />
-				</svg>
-			)
-		};
-		this.draughtsFen = "g1g1g1g1/1g1g1g1g/g1g1g1g1/8/8/1G1G1G1G/G1G1G1G1/1G1G1G1G w KQkq - 0 1";
-		this.standardFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		this.gamePresets = {
+			chess: {
+				currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+				ranks: 8,
+				files: 8,
+				pieceDefinitions: {}
+			},
+			draughts: {
+				currentPosition: "1g1g1g1g1g/g1g1g1g1g1/1g1g1g1g1g/g1g1g1g1g1/91/91/1G1G1G1G1G/G1G1G1G1G1/1G1G1G1G1G/G1G1G1G1G1 w - - 0 1",
+				ranks: 10,
+				files: 10,
+				pieceDefinitions: {
+					'G': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/9/90/Draughts_mlt45.svg"),
+					'g': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/0/0c/Draughts_mdt45.svg")
+				}
+			},
+			courier: {
+				currentPosition: "rnbcmk1scbnr/1ppppp1pppp1/6q5/p5p4p/P5P4p/6Q5/1PPPPP1PPPP1/RNBCMK1SCBNR",
+				ranks: 8,
+				files: 12,
+				pieceDefinitions: {
+					'C': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/7/7c/Chess_Blt45.svg"),
+					'c': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/5/5a/Chess_Bdt45.svg"),
+					'M': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/1/17/Chess_flt45.svg"),
+					'm': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/2/2c/Chess_fdt45.svg"),
+					'S': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/c/ce/Chess_tlt45.svg"),
+					's': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/e/e2/Chess_tdt45.svg")
+				}
+			}
+		}
+	}
+
+	// Convenience function for concisely creating piece definition callbacks
+	_createPieceDefinition(url) {
+		return (transformString) => (
+			<svg>
+				<image transform={transformString} href={url} />
+			</svg>
+		)
 	}
 
 // event handlers:
@@ -57,19 +84,27 @@ class App extends Component {
 		this.setState({darkSquareColor: evt.target.value});
 	}
 
-	_onDraughtsChanged(evt) {
-		const position = evt.target.checked ? this.draughtsFen : this.standardFen;
-		this.setState({currentPosition: position,   draughts: evt.target.checked})
-	}
-
 	_onMovePiece(piece, fromSquare, toSquare) { // user moved a piece
+		clearTimeout(this.timeout)
 		// echo move back to user:
 		let message = 'You moved ' + piece + fromSquare + " to " + toSquare + ' !';
 		this.setState({lastMessage: message}, (()=> {
-			setTimeout(()=> {
+			this.timeout = setTimeout(()=> {
 					this.setState({lastMessage: ''});
 			}, 2000); // clear message after 2s
 		}));
+	}
+
+	_onFilesChanged(evt) {
+		this.setState({files: Number(evt.target.value)});
+	}
+
+	_onRanksChanged(evt) {
+		this.setState({ranks: Number(evt.target.value)});
+	}
+
+	_onGameTypeChange(evt) {
+		this.setState(Object.assign(this.gamePresets[evt.target.value], {gameType: evt.target.value}));
 	}
 
 // the render() function:
@@ -78,24 +113,39 @@ class App extends Component {
 			<div className="demo">
 				<h1>Chess Diagram</h1>
 				<div>
-					<p> Enter a position (using a FEN string) here:</p>
-					<input type="text" value={this.state.currentPosition} size="70" onChange={this._onPositionChanged.bind(this)}
-						autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
-					<p> Square Size: </p>
-					<input type="range" value={this.state.squareSize} min={10} max={100} step={1} onChange = {evt => {
-						this.setState({squareSize: Number(evt.target.value)});
-					}}/>
-					<p>Flip Board ?<input type="checkbox" value={this.state.flip} onChange={this._onFlipChanged.bind(this)} /></p>
-					<p>Draughts ?<input type="checkbox" value={this.state.draughts} onChange={this._onDraughtsChanged.bind(this)} /></p>
-					<p>Light Square Color:<input type="color" value={this.state.lightSquareColor} onChange={this._onLightSquareColorChanged.bind(this)} /></p>
-					<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
+					<div>
+						<p> Enter a position (using a FEN string) here:</p>
+						<input type="text" value={this.state.currentPosition} size="70" onChange={this._onPositionChanged.bind(this)}
+							autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
+					</div>
+					<div className="propGroup">
+						<p> Square Size: </p>
+						<input type="range" value={this.state.squareSize} min={10} max={100} step={1} onChange = {evt => {
+							this.setState({squareSize: Number(evt.target.value)});
+						}}/>
+						<p>Flip Board ?<input type="checkbox" value={this.state.flip} onChange={this._onFlipChanged.bind(this)} /></p>
+						<p>Light Square Color:<input type="color" value={this.state.lightSquareColor} onChange={this._onLightSquareColorChanged.bind(this)} /></p>
+						<p>Dark Square Color:<input type="color" value={this.state.darkSquareColor} onChange={this._onDarkSquareColorChanged.bind(this)} /></p>
+					</div>
+					<div className="propGroup">
+						<p>Game Type:{'\u00A0'}
+							<select name="gameType" value={this.state.gameType} onChange={this._onGameTypeChange.bind(this)}>
+								{Object.keys(this.gamePresets).map(gameType => (
+									<option key={gameType} value={gameType}>{gameType}</option>
+								))}
+							</select>
+						</p>
+						<p>Ranks:<input type="range" value={this.state.ranks} min={2} max={16} onChange={this._onRanksChanged.bind(this)} /> {this.state.ranks}</p>
+						<p>Files:<input type="range" value={this.state.files} min={2} max={16} onChange={this._onFilesChanged.bind(this)} /> {this.state.files}</p>
+					</div>
 					<p/>
 				</div>
 					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={this.state.squareSize}
 						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}
-						pieceDefinitions={this.state.draughts ? this.draughtsPieceDefinitions : {}}
+						ranks={this.state.ranks} files={this.state.files}
+						pieceDefinitions={this.gamePresets[this.state.gameType].pieceDefinitions}
 					/>
-				<p><strong>{this.state.lastMessage}</strong></p>
+				<p className={"lastMessage"}><strong>{this.state.lastMessage}</strong></p>
 			</div>
     );
   }

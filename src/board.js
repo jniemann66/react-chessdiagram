@@ -34,12 +34,31 @@ class Square extends Component {
 	}
 }
 
+Square.propTypes = {
+	darkSquareColor: React.PropTypes.string.isRequired,
+	light: React.PropTypes.bool.isRequired,
+	lightSquareColor: React.PropTypes.string.isRequired,
+	squareSize: React.PropTypes.number.isRequired,
+	x: React.PropTypes.number.isRequired,
+	y: React.PropTypes.number.isRequired,
+};
+
 class SquareHighlight extends Component {
 	render() {
-		let highlightColor = 'yellow';
-		return <rect x={this.props.x} y={this.props.y} width={this.props.squareSize} height={this.props.squareSize} stroke={highlightColor} fill="none" strokeWidth="3" />;
+		return <rect x={this.props.x} y={this.props.y} width={this.props.squareSize} height={this.props.squareSize} stroke={this.props.highlightColor} fill="none" strokeWidth="3" />;
 	}
 }
+
+SquareHighlight.propTypes = {
+	highlightColor: React.PropTypes.string.isRequired,
+	squareSize: React.PropTypes.number.isRequired,
+	x: React.PropTypes.number.isRequired,
+	y: React.PropTypes.number.isRequired,
+};
+
+SquareHighlight.defaultProps = {
+	highlightColor: 'yellow'
+};
 
 class RankLabels extends Component {
 
@@ -94,6 +113,16 @@ class FileLabels extends Component {
 		);
 	}
 }
+
+const LabelPropTypes = {
+	files: React.PropTypes.number,
+	flip: React.PropTypes.bool.isRequired,
+	ranks: React.PropTypes.number,
+	squareSize: React.PropTypes.number.isRequired,
+};
+
+RankLabels.propTypes = LabelPropTypes;
+FileLabels.propTypes = LabelPropTypes;
 
 /** Board : draws a chess board with given square size, square colors, and number of files and ranks */
 class Board extends Component {
@@ -158,7 +187,7 @@ class Board extends Component {
 			<svg>
 				{squares.map((square,i) =>
 					<Square
-						x={square.x} y={square.y} key={i} light={square.light} squareSize={this.props.squareSize}
+						x={square.x} y={square.y} key={i} light={!!square.light} squareSize={this.props.squareSize}
 						lightSquareColor={this.props.lightSquareColor} darkSquareColor={this.props.darkSquareColor}
 					/>
 				)}
@@ -169,15 +198,16 @@ class Board extends Component {
 			</svg>
 		);
 	}
-}	
+}
 
 Board.propTypes = {
-	darkSquareColor: React.PropTypes.string,
-	files: React.PropTypes.number,
-	flip: React.PropTypes.bool,
-	lightSquareColor: React.PropTypes.string,
-	ranks: React.PropTypes.number,
-	squareSize: React.PropTypes.number,
+	darkSquareColor: React.PropTypes.string.isRequired,
+	files: React.PropTypes.number.isRequired,
+	flip: React.PropTypes.bool.isRequired,
+	lightSquareColor: React.PropTypes.string.isRequired,
+	ranks: React.PropTypes.number.isRequired,
+	selectedSquare: React.PropTypes.string,
+	squareSize: React.PropTypes.number.isRequired,
 };
 
 Board.defaultProps = {

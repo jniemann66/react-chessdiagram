@@ -2,3 +2,13 @@
 	margin-left: 40px;
 	font-family: sans-serif;
 }
+
+.propGroup {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.lastMessage {
+	display: inline-block;
+	position: absolute;
+}

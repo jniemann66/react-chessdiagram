@@ -4,8 +4,10 @@
   "description": "chess diagram react component",
   "main": "./build/dist.chessdiagram.js",
   "dependencies": {
+    "chess.js": "^0.10.2",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-table": "^5.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

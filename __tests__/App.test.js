@@ -3,6 +3,8 @@ import { mount, shallow } from 'enzyme';
 import Chessdiagram from '../src/chessdiagram';
 import Piece from '../src/piece';
 import Board from '../src/board';
+import BoardContainer from '../src/BoardContainer.js';
+import GameHistory from '../src/GameHistory.js';
 import sinon from 'sinon';
 
 const startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -27,11 +29,10 @@ describe('testing interpretation of FEN string', () => {
 		];
 
 		const wrapper = mount(
-			<Chessdiagram ref="cd" ranks={8} files={8} fen={startPosition} />
+			<BoardContainer ref="cd" ranks={8} files={8} fen={startPosition} />
 		);
 
 		let instance = wrapper.instance();
-
 		occupiedSquares.map((sq) => {
 			expect(instance._getPieceAtSquare(sq).pieceType).toBe(pieces[sq]);
 		});
@@ -63,7 +64,7 @@ describe('When selecting squares at each corner of 8x8 board', () => {
 		let spySelectSquare = sinon.spy();
 
 		const wrapper = mount(
-			<Chessdiagram onSelectSquare={spySelectSquare} ranks={8} files={8} />
+			<BoardContainer onSelectSquare={spySelectSquare} ranks={8} files={8} />
 		);
 
 		let squareSize = wrapper.props().squareSize;
@@ -112,7 +113,7 @@ describe('When moving pawn from e2-e4 on 8x8 board', () => {
 		let spyMovePiece = sinon.spy();
 
 		const wrapper = mount(
-			<Chessdiagram onMovePiece={spyMovePiece} ranks={8} files={8} fen={startPosition} />
+			<BoardContainer onMovePiece={spyMovePiece} ranks={8} files={8} fen={startPosition} />
 		);
 
 		let squareSize = wrapper.props().squareSize;
@@ -135,7 +136,6 @@ describe('When moving pawn from e2-e4 on 8x8 board', () => {
 
 		// simulate mouseup on e4
 		wrapper.simulate('mouseup', e4Coords);
-
 		expect(spyMovePiece.calledWith('P', 'e2', 'e4')).toBe(true);
 
 		wrapper.unmount();
@@ -149,7 +149,13 @@ describe('testing for custom pieces being rendered correctly on 8x8 board', () =
 		const wrapper = mount(
 			<Chessdiagram ref="cd" ranks={8} files={8}
 			fen={"rnbqkbnr/pppppppp/a7/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
-			pieceDefinitions={{'a': (transformString) => (<image transform={transformString} height={45} width={45} href={"https://upload.wikimedia.org/wikipedia/commons/d/d0/Guard_%28an_icon_of_the_chess_piece%29_Classical_Version.png"}></image>)}}
+			pieceDefinitions={{'a': (transformString) => (
+        <image
+          height={45}
+          href={"https://upload.wikimedia.org/wikipedia/commons/d/d0/Guard_%28an_icon_of_the_chess_piece%29_Classical_Version.png"}
+          transform={transformString}
+          width={45}
+        />)}}
 			/>
 		);
 		expect(wrapper.find(Board).length).toBe(1);
@@ -179,4 +185,106 @@ describe('testing non-standard board widths', () => {
 		// Not totally sure why expect is returning an object w/o all of the standard Jest matchers
 		expect(wrapper.find('Square').length).toBe(144);
 	})
+});
+
+/***************
+* Test GameHistory container
+***************/
+
+describe('Testing GameHistory', () => {
+  const testPgn = ['[Event "Casual Game"]',
+   '[Site "Berlin GER"]',
+   '[Date "1852.??.??"]',
+   '[EventDate "?"]',
+   '[Round "?"]',
+   '[Result "1-0"]',
+   '[White "Adolf Anderssen"]',
+   '[Black "Jean Dufresne"]',
+   '[ECO "C52"]',
+   '[WhiteElo "?"]',
+   '[BlackElo "?"]',
+   '[PlyCount "47"]',
+   '',
+   '1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.b4 Bxb4 5.c3 Ba5 6.d4 exd4 7.O-O',
+   'd3 8.Qb3 Qf6 9.e5 Qg6 10.Re1 Nge7 11.Ba3 b5 12.Qxb5 Rb8 13.Qa4',
+   'Bb6 14.Nbd2 Bb7 15.Ne4 Qf5 16.Bxd3 Qh5 17.Nf6+ gxf6 18.exf6',
+   'Rg8 19.Rad1 Qxf3 20.Rxe7+ Nxe7 21.Qxd7+ Kxd7 22.Bf5+ Ke8',
+   '23.Bd7+ Kf8 24.Bxe7# 1-0'];
+
+  it('should not render by default', () => {
+    const wrapper = mount(
+      <Chessdiagram ref="cd" />
+    );
+    expect(wrapper.find('GameHistory').length).toBe(0);
+  });
+
+  it('should render if enabled', () => {
+    const wrapper = mount(
+      <Chessdiagram ref="cd" gameHistory />
+    );
+    expect(wrapper.find('GameHistory').length).toBe(1);
+  });
+
+  it('should render test pgn', () => {
+    const wrapper = mount(
+      <GameHistory
+        ref="cd"
+        gameHistory
+        pgn={testPgn.join('\n')}
+      />
+    );
+    expect(wrapper.find('.pgn-cell').length).toBe(48);
+  });
+
+  it('should render with non-standard newlineChar', () => {
+    const wrapper = mount(
+      <GameHistory
+        ref="cd"
+        gameHistory
+        newlineChar={"\t"}
+        pgn={testPgn.join('\t')}
+      />
+    );
+    expect(wrapper.find('.pgn-cell').length).toBe(48);
+  });
+
+  it('should change currentPosition', () => {
+    const Chess = require('chess.js').Chess;
+
+    const wrapper = mount(<Chessdiagram ref="cd" gameHistory pgn={testPgn.join('\n')}/>);
+    const firstMove = wrapper.findWhere(n => n.text() === '|<');
+    const reversePgn = wrapper.findWhere(n => n.text() === '<');
+    const advancePgn = wrapper.findWhere(n => n.text() === '>');
+    const lastMove = wrapper.findWhere(n => n.text() === '>|');
+    console.log('wrapper state', wrapper.state());
+
+    let game = new Chess();
+    const fens = [];
+    game.load_pgn(testPgn.join('\n'));
+    while (true) {
+      fens.unshift(game.fen());
+      const result = game.undo();
+      if (!result) {
+        break;
+      }
+    }
+    for (let i = 0; i < fens.length-1; i++) {
+      expect(wrapper.state().currentPosition).toBe(fens[i]);
+      advancePgn.simulate('click');
+    }
+    firstMove.simulate('click');
+    for (let i = 0; i < fens.length-1; i++) {
+      expect(wrapper.state().currentPosition).toBe(fens[i]);
+      advancePgn.simulate('click');
+    }
+    expect(wrapper.state().currentPosition).toBe(fens[fens.length - 1]);
+
+    lastMove.simulate('click');
+    for (let i = fens.length - 1; i > 0; i--) {
+      expect(wrapper.state().currentPosition).toBe(fens[i]);
+      reversePgn.simulate('click')
+    }
+    expect(wrapper.state().currentPosition).toBe(fens[0]);
+  });
+
 });

@@ -235,27 +235,30 @@ class Chessdiagram extends Component {
 	}
 
 	_getPiecesFromFEN() {
-		let pieces = [];
 		let fields = this.props.fen.split(" ", 6);
-		let rank=this.props.ranks-1, file = 0; // (zero-based)
-		let x,y,square;
 		const pieceDefinitions = Object.assign(standardPieceDefinitions, this.props.pieceDefinitions);
 		const pieceChars = new RegExp('[' + Object.keys(pieceDefinitions).join('').replace('-', '\\-') + ']');
-		for (let i = 0; i<fields[0].length; i++) {
-			let c = fields[0].charAt(i);
-			if(pieceChars.test(c)) {
-				[x,y] = this._fileRankToCoords(file, rank);
-				square = String.fromCharCode(97 + file) + (rank + 1).toString();
-				pieces.push({pieceType: c, square: square, x: x, y: y});
-				file++;
-			} else if (c === "/") {
-				rank -= 1;
-				file = 0;
-			}	else if(/[1-9]/.test(c)) {
-				file += Number(c);
-			}
-		}
-		return pieces;
+		const splitFen = fields[0].replace(/(\d+|\w|\/)(?!$)/g, '$1,').split(',');
+		return splitFen
+			.reduce((accum, c) => {
+				if(pieceChars.test(c)) {
+					let [x,y] = this._fileRankToCoords(accum.file, accum.rank);
+					let square = String.fromCharCode(97 + accum.file) + (accum.rank + 1).toString();
+					accum.pieces.push({pieceType: c, square: square, x: x, y: y});
+					accum.file++;
+				} else if (c === "/") {
+					accum.rank -= 1;
+					accum.file = 0;
+				}	else if(Number.isInteger(parseInt(c))) {
+					accum.file += Number(c);
+				}
+				return accum;
+			}, {
+				rank: this.props.ranks-1,
+				file: 0,
+				pieces: []
+			})
+			.pieces;
 	}
 
 	_getPieceAtSquare(square) {

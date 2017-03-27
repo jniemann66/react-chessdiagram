@@ -33,7 +33,7 @@ class App extends Component {
 				pieceDefinitions: {}
 			},
 			draughts: {
-				currentPosition: "1g1g1g1g1g/g1g1g1g1g1/1g1g1g1g1g/g1g1g1g1g1/91/91/1G1G1G1G1G/G1G1G1G1G1/1G1G1G1G1G/G1G1G1G1G1 w - - 0 1",
+				currentPosition: "1g1g1g1g1g/g1g1g1g1g1/1g1g1g1g1g/g1g1g1g1g1/10/10/1G1G1G1G1G/G1G1G1G1G1/1G1G1G1G1G/G1G1G1G1G1 w - - 0 1",
 				ranks: 10,
 				files: 10,
 				pieceDefinitions: {

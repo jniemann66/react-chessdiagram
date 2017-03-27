@@ -172,7 +172,7 @@ describe('testing non-standard board widths', () => {
 	it('should return 144 squares on 12x12', () => {
 		const wrapper = mount(
 			<Chessdiagram ref="cd" ranks={12} files={12}
-				fen={"93/93/93/93/93/93/93/93/93/93/93/93 w - - 0 1"}
+				fen={"12/12/12/12/12/12/12/12/12/12/12/12 w - - 0 1"}
 			/>
 		);
 		// Aside: `expect(wrapper.find('Square')).toHaveLength(144)` should work, and it doesn't.

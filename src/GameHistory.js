@@ -108,7 +108,6 @@ class GameHistory extends Component {
 		const movetext = props.getMovetext(props.pgn, props.newlineChar);
 		const rows = props.getRows(movetext, props.newlineChar);
 		const maxMove = props.pgn ? (rows.length - 1) * 2 + (rows[rows.length - 1].length - 1) : 0;
-		// console.log('calcing maxmove', rows.length, rows[rows.length - 1].length - 1, maxMove);
 		this.state = {
 			header: props.getHeader(props.pgn, props.newlineChar),
 			movetext,

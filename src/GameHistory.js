@@ -105,20 +105,28 @@ class GameHistory extends Component {
 
 	constructor(props) {
 		super(props);
-		const rows = this.rows;
+		const movetext = props.getMovetext(props.pgn, props.newlineChar);
+		const rows = props.getRows(movetext, props.newlineChar);
 		const maxMove = props.pgn ? (rows.length - 1) * 2 + (rows[rows.length - 1].length - 1) : 0;
 		this.state = {
-			header: this.headerRegex.exec(props.pgn),
-			movetext: this.movetextRegex.exec(props.pgn),
-			maxMove: maxMove
+			header: props.getHeader(props.pgn, props.newlineChar),
+			movetext,
+			maxMove: maxMove,
+			rows
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.pgn !== this.props.pgn) {
-			const rows = this.rows;
+			const movetext = nextProps.getMovetext(nextProps.pgn, nextProps.newlineChar);
+			const rows = nextProps.getRows(movetext, nextProps.newlineChar);
 			const maxMove = nextProps.pgn ? (rows.length - 1) * 2 + (rows[rows.length - 1].length - 1) : 0;
-			this.setState({rows, maxMove});
+			this.setState({
+				header: nextProps.getHeader(nextProps.pgn, nextProps.newlineChar),
+				maxMove,
+				movetext,
+				rows
+			});
 		}
 	}
 
@@ -136,70 +144,6 @@ class GameHistory extends Component {
 
 	}
 
-	get rows() {
-		let ms = this.movetext;
-		if (!ms) {
-			return [];
-		}
-    /* delete comments */
-		ms = ms.replace(/(\{[^}]+\})+?/g, '');
-
-    /* delete recursive annotation variations */
-		const ravRegex = /(\([^\(\)]+\))+?/g;
-		while (ravRegex.test(ms)) {
-			ms = ms.replace(ravRegex, '');
-		}
-
-    /* delete numeric annotation glyphs */
-		ms = ms.replace(/\$\d+/g, '');
-
-    /* Delete result */
-		ms = ms.replace(/(?:1-0|0-1|1\/2-1\/2|\*)$/, '');
-
-		/* Delete any double spaces */
-		ms = ms.replace(/\s\s/g, ' ').trim();
-
-    /* Split into rows */
-		const rows = [];
-		const rowRegex = /\d+\.\s?\S+(?:\s+\S+)?/g;
-		while (true) {
-			const result = rowRegex.exec(ms);
-			if (!result) {break;}
-			const row = result[0].split(/\s|\.\s?/g);
-			row[0] = parseInt(row[0]);
-			rows.push(row);
-		}
-		return rows;
-	}
-
-	get header() {
-		const result = this.headerRegex.exec(this.props.pgn);
-		return result ? result[0] : '';
-	}
-
-	get movetext() {
-		const result =  this.movetextRegex.exec(this.props.pgn);
-		return result ? result[0] : '';
-	}
-
-	get headerRegex() {
-		return new RegExp('^(' + this.props.newlineChar + '|.)*' +
-                      '(?:'+ this.props.newlineChar +'){2}');
-	}
-
-	get movetextRegex() {
-		return new RegExp('(?:' + this.props.newlineChar + '){2}' +
-                      '(' + this.props.newlineChar + '|.)*$');
-	}
-
-	get result() {
-    /* Return the game termination marker, which will be one of:
-    *  	1-0 | 0-1 | 1/2-1/2 | *
-    */
-		const regex = new RegExp(/(?:1-0|0-1|1\/2-1\/2|\*)$/);
-		return this.props.pgn.match(regex)[0];
-	}
-
 	render () {
 		return (
       <div style={{display: 'inline-block', position: 'absolute', marginLeft: 5}}>
@@ -208,7 +152,7 @@ class GameHistory extends Component {
           moveHead={this.props.moveHead}
           pgnHeight={this.props.pgnHeight}
           pgnWidth={this.props.pgnWidth}
-          rows={this.rows}
+          rows={this.props.getRows(this.props.getMovetext(this.props.pgn, this.props.newlineChar), this.props.newlineChar)}
         />
         <PgnControls moveHead={this._onMovePgnHead.bind(this)}/>
       </div>
@@ -218,6 +162,10 @@ class GameHistory extends Component {
 
 GameHistory.propTypes = {
 	currentMove: React.PropTypes.number,
+	getHeader: React.PropTypes.func,
+	getMovetext: React.PropTypes.func,
+	getResult: React.PropTypes.func,
+	getRows: React.PropTypes.func,
 	moveHead: React.PropTypes.func,
 	newlineChar: React.PropTypes.string.isRequired,
 	pgn: React.PropTypes.string,
@@ -226,7 +174,72 @@ GameHistory.propTypes = {
 	sloppy: React.PropTypes.bool
 };
 
+const defaultGetHeader = (pgn, newlineChar) => {
+	const headerRegex = new RegExp('^(' + newlineChar + '|.)*' +
+																	'(?:' + newlineChar + '){2}');
+	const result = headerRegex.exec(pgn);
+	return result ? result[0] : '';
+};
+
+const defaultGetMovetext = (pgn, newlineChar) => {
+	const movetextRegex = new RegExp('(?:' + newlineChar + '){2}' +
+																		'(' + newlineChar + '|.)*$');
+	const result = movetextRegex.exec(pgn);
+	return result ? result[0] : '';
+};
+
+const defaultGetRows = (movetext, newlineChar) => { // eslint-diable-line no-unused-vars
+	newlineChar;
+	let ms = movetext;
+	// console.log('movetext ==', movetext);
+	if (!ms) {
+		return [];
+	}
+	/* delete comments */
+	ms = ms.replace(/(\{[^}]+\})+?/g, '');
+
+	/* delete recursive annotation variations */
+	const ravRegex = /(\([^\(\)]+\))+?/g;
+	while (ravRegex.test(ms)) {
+		ms = ms.replace(ravRegex, '');
+	}
+
+	/* delete numeric annotation glyphs */
+	ms = ms.replace(/\$\d+/g, '');
+
+	/* Delete result */
+	ms = ms.replace(/(?:1-0|0-1|1\/2-1\/2|\*)$/, '');
+
+	/* Delete any double spaces */
+	ms = ms.replace(/\s\s/g, ' ').trim();
+
+	/* Split into rows */
+	const rows = [];
+	const rowRegex = /\d+\.\s?\S+(?:\s+\S+)?/g;
+	while (true) {
+		const result = rowRegex.exec(ms);
+		if (!result) {break;}
+		const row = result[0].split(/\s|\.\s?/g);
+		row[0] = parseInt(row[0]);
+		rows.push(row);
+	}
+	return rows;
+};
+
+const defaultGetResult = (pgn, newlineChar) => { // eslint-diable-line no-unused-vars
+	newlineChar;
+	/* Return the game termination marker, which will be one of:
+  *  	1-0 | 0-1 | 1/2-1/2 | *
+  */
+	const regex = new RegExp(/(?:1-0|0-1|1\/2-1\/2|\*)$/);
+	return pgn.match(regex)[0];
+};
+
 GameHistory.defaultProps = {
+	getHeader: defaultGetHeader,
+	getMovetext: defaultGetMovetext,
+	getResult: defaultGetResult,
+	getRows: defaultGetRows,
 	newlineChar: '\r?\n',
 	sloppy: false
 };

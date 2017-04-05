@@ -87,11 +87,16 @@ class Chessdiagram extends Component {
 				/>
 				{this.props.gameHistory ?
 					<GameHistory
-						style={{display: 'inline-block'}}
 						currentMove={this.state.currentMove}
-						newlineChar={this.props.newlineChar}
+						getHeader={this.props.getHeader}
+						getMovetext={this.props.getMovetext}
+						getNthMove={this.props.getNthMove}
+						getResult={this.props.getResult}
+						getRows={this.props.getRows}
 						moveHead={this._onMovePgnHead.bind(this)}
+						newlineChar={this.props.newlineChar}
 						pgn={this.props.pgn}
+						style={{display: 'inline-block'}}
 					/> : null
 				}
 			</div>
@@ -110,6 +115,14 @@ Chessdiagram.propTypes = {
 	flip: React.PropTypes.bool,
 	/** whether to render a GameHistory component */
 	gameHistory: React.PropTypes.bool,
+	/** Optional custom callbacks for PGN parsing. should take two arguments:
+	* pgn (string) and newlineChar (string).
+	*/
+	getHeader: React.PropTypes.func,
+	getMovetext: React.PropTypes.func,
+	getResult: React.PropTypes.func,
+	/** Returns an array of arrays, containing [<fullmoveNumber>, <whiteMove> <optionalBlackMove>] */
+	getRows: React.PropTypes.func,
 	/** Takes a pgn and returns the FEN of the nth move.
 	* Chessdiagram can take a custom callback here, with the following params:
 	* pgn: string that can be parsed as a normal pgn (eg, double linebreak b/w header

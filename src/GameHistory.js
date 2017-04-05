@@ -105,7 +105,7 @@ class GameHistory extends Component {
 
 	constructor(props) {
 		super(props);
-		const rows = this.rows
+		const rows = this.rows;
 		const maxMove = props.pgn ? (rows.length - 1) * 2 + (rows[rows.length - 1].length - 1) : 0;
 		this.state = {
 			header: this.headerRegex.exec(props.pgn),

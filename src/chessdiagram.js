@@ -55,7 +55,7 @@ class Chessdiagram extends Component {
 			this.setState({currentPosition: nextProps.fen});
 		}
 		if (nextProps.pgn && nextProps.pgn !== this.props.pgn) {
-			this.setState({currentPosition: this.props.getNthMove(nextProps.pgn, -1)});
+			this.setState({currentPosition: this.props.getNthMove(nextProps.pgn, 0)});
 		}
 	}
 
@@ -100,14 +100,24 @@ class Chessdiagram extends Component {
 }
 
 Chessdiagram.propTypes = {
+	/** Whether to allow the user to make moves on the board (ie, whether to ignore mouse input) */
 	allowMoves: React.PropTypes.bool,
 	darkSquareColor: React.PropTypes.string,
+	/** Fen string to render. Should override  */
 	fen: React.PropTypes.string,
 	files: React.PropTypes.number,
 	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */
 	flip: React.PropTypes.bool,
 	/** whether to render a GameHistory component */
 	gameHistory: React.PropTypes.bool,
+	/** Takes a pgn and returns the FEN of the nth move.
+	* Chessdiagram can take a custom callback here, with the following params:
+	* pgn: string that can be parsed as a normal pgn (eg, double linebreak b/w header
+	* and move text, moves in the format `<fullmoveNumber>. <whiteMove> <blackMove>`
+	* or /\d+\.\s\w+(?:\s\w+)?/ )
+	* move: half move (so if you want 1. e4, you'd pass 1. If you want 2 ... Nf6,
+	* you'd pass 4). If passed 0, should return the start position. Should be
+	* stateless.*/
 	getNthMove: React.PropTypes.func,
 	/** height of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
 	height: React.PropTypes.oneOfType([
@@ -124,7 +134,8 @@ Chessdiagram.propTypes = {
 	onMovePgnHead: React.PropTypes.func,
 	/** callback function which is called when user clicks on a square. Passes name of square as parameter to callback */
 	onSelectSquare: React.PropTypes.func,
-	options: React.PropTypes.object,
+	/** String representation of a PGN. Note that chess.js can't handle templates,
+	* so if you'd like to pass templates you'll need a custom getNthMove callback.*/
 	pgn: React.PropTypes.string,
 	/** Height of pgn viewer component */
 	pgnHeight: React.PropTypes.number,
@@ -135,6 +146,7 @@ Chessdiagram.propTypes = {
 	/** Optional associative array containing non-standard chess characters*/
 	pieceDefinitions: React.PropTypes.object,
 	ranks: React.PropTypes.number,
+	/** size of the squares in pixels */
 	squareSize: React.PropTypes.number,
 	// Which move to start the game on. Either halfmove count or letter followed by full move eg w12 //
 	startMove: React.PropTypes.oneOfType([
@@ -150,7 +162,15 @@ Chessdiagram.propTypes = {
 	]),
 };
 
-// Takes a pgn and returns the FEN of the nth move
+/** Takes a pgn and returns the FEN of the nth move.
+* Chessdiagram can take a custom callback here, with the following params:
+* pgn: string that can be parsed as a normal pgn (eg, double linebreak b/w header
+* and move text, moves in the format `<fullmoveNumber>. <whiteMove> <blackMove>`
+* or /\d+\.\s\w+(?:\s\w+)?/ )
+* move: half move (so if you want 1. e4, you'd pass 1. If you want 2 ... Nf6,
+* you'd pass 4). If passed 0, should return the start position. Should be
+* stateless.
+*/
 const getNthMoveDefault = (pgn, move) => {
 
 	var Game = require('chess.js'); // eslint-disable-line no-undef
@@ -162,9 +182,6 @@ const getNthMoveDefault = (pgn, move) => {
 		return game.fen();
 	}
 	game.load_pgn(pgn);
-	if (move === -1) {
-		return game.fen();
-	}
 
 	for (let i = game.history().length - move; i > 0; i--) {
 		game.undo();

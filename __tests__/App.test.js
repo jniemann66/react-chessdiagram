@@ -368,64 +368,64 @@ describe('Testing pgn controls', () => {
 		refreshWrapper();
 		expect(wrapper.find('Piece').length).toBe(32);
 		lastMove.simulate('click');
-		const pieceCount = wrapper.state().currentPosition.split(' ')[0].match(/[a-zA-Z]/g).length
+		const pieceCount = wrapper.state().moves[wrapper.state().currentMove].split(' ')[0].match(/[a-zA-Z]/g).length
 		expect(wrapper.find('Piece').length).toBe(pieceCount);
 	});
 
 	it('should go to last move properly', () => {
 		refreshWrapper();
-		expect(wrapper.state().currentPosition).toBe(fens[0]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0]);
 		lastMove.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last]);
 		/* check to make sure there's not an off by one */
 		reversePgn.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last-1]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last-1]);
 	});
 
 	it('should step forward through moves', () => {
 		refreshWrapper();
-		expect(wrapper.state().currentPosition).toBe(fens[0]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0]);
 		for (let i = 0; i < fens.length - 1; i++) {
 			advancePgn.simulate('click');
-			expect(wrapper.state().currentPosition).toBe(fens[i + 1]);
+			expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[i + 1]);
 		}
 	});
 
 	it('should goto first move properly', () => {
 		refreshWrapper();
-		expect(wrapper.state().currentPosition).toBe(fens[0], 'start move');
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0], 'start move');
 		lastMove.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last]);
 		firstMove.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[0]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0]);
 		/* Make sure there's not an off-by-one */
 		advancePgn.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[1]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[1]);
 	})
 
 	it('should step backwards through moves', () => {
 		refreshWrapper();
-		expect(wrapper.state().currentPosition).toBe(fens[0], 'start move');
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0], 'start move');
 		lastMove.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last]);
 		for (let i = last; i > 0; i--) {
 			reversePgn.simulate('click');
-			expect(wrapper.state().currentPosition).toBe(fens[i - 1]);
+			expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[i - 1]);
 		}
 	});
 
 	it('should tolerate moving off the edge', () => {
 		refreshWrapper();
-		expect(wrapper.state().currentPosition).toBe(fens[0]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0]);
 		reversePgn.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[0]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[0]);
 		advancePgn.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[1]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[1]);
 		lastMove.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last]);
 		advancePgn.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last]);
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last]);
 		reversePgn.simulate('click');
-		expect(wrapper.state().currentPosition).toBe(fens[last - 1])
+		expect(wrapper.state().moves[wrapper.state().currentMove]).toBe(fens[last - 1])
 	})
 });

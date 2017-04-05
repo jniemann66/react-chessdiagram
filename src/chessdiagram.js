@@ -34,28 +34,22 @@ import GameHistory from './GameHistory.js';
 class Chessdiagram extends Component {
 	constructor(props) {
 		super(props);
-		let currentMove;
-		if (typeof props.startMove === 'number' || parseInt(props.startMove)) {
-			// halfMove provided
-			currentMove = parseInt(props.startMove);
-		} else {
-			// e.g., 'w12'
-			currentMove = (parseInt(props.startMove.slice(1)) - 1) * 2 + (props.startMove[0] === 'w' ? 1 : 2);
-		}
 
+		const moves = props.fen ? [props.fen] : props.getAllFen(props.pgn);
+		const currentMove = props.fen ? 0 : this.startMove;
 		this.state = {
-			currentMove: currentMove,
-			currentPosition: props.pgn ? props.getNthMove(props.pgn, currentMove) : props.fen
+			currentMove,
+			moves
 		};
 	}
 
 	// Lifecycle events
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.fen && nextProps.fen !== this.props.fen) {
-			this.setState({currentPosition: nextProps.fen});
+			this.setState({currentMove: 0, moves: [nextProps.fen]});
 		}
 		if (nextProps.pgn && nextProps.pgn !== this.props.pgn) {
-			this.setState({currentPosition: this.props.getNthMove(nextProps.pgn, 0)});
+			this.setState({currentMove: this.startMove, moves: nextProps.getAllFen(nextProps.pgn)});
 		}
 	}
 
@@ -69,9 +63,21 @@ class Chessdiagram extends Component {
 
 	_onMovePgnHead(halfMove) {
 		this.setState({
-			currentMove: halfMove,
-			currentPosition: this.props.getNthMove(this.props.pgn, halfMove)
+			currentMove: halfMove
 		});
+	}
+
+	// returns halfmove count of the prop startMove ////
+	get startMove() {
+		let currentMove;
+		if (typeof this.props.startMove === 'number' || parseInt(this.props.startMove)) {
+			// halfMove provided
+			currentMove = parseInt(this.props.startMove);
+		} else {
+			// e.g., 'w12'
+			currentMove = (parseInt(this.props.startMove.slice(1)) - 1) * 2 + (this.props.startMove[0] === 'w' ? 1 : 2);
+		}
+		return currentMove;
 	}
 
 	// render function
@@ -81,7 +87,7 @@ class Chessdiagram extends Component {
 			<div>
 				<BoardContainer
 					{...this.props}
-					fen={this.state.currentPosition}
+					fen={this.state.moves[this.state.currentMove]}
 					style={{display: 'inline-block'}}
 					onMovePiece={this._onMovePiece.bind(this)}
 				/>
@@ -90,7 +96,6 @@ class Chessdiagram extends Component {
 						currentMove={this.state.currentMove}
 						getHeader={this.props.getHeader}
 						getMovetext={this.props.getMovetext}
-						getNthMove={this.props.getNthMove}
 						getResult={this.props.getResult}
 						getRows={this.props.getRows}
 						moveHead={this._onMovePgnHead.bind(this)}
@@ -115,23 +120,14 @@ Chessdiagram.propTypes = {
 	flip: React.PropTypes.bool,
 	/** whether to render a GameHistory component */
 	gameHistory: React.PropTypes.bool,
-	/** Optional custom callbacks for PGN parsing. should take two arguments:
-	* pgn (string) and newlineChar (string).
+	/** Optional custom callbacks for PGN parsing. should take pgn (string).
 	*/
+	getAllFen: React.PropTypes.func,
 	getHeader: React.PropTypes.func,
 	getMovetext: React.PropTypes.func,
 	getResult: React.PropTypes.func,
 	/** Returns an array of arrays, containing [<fullmoveNumber>, <whiteMove> <optionalBlackMove>] */
 	getRows: React.PropTypes.func,
-	/** Takes a pgn and returns the FEN of the nth move.
-	* Chessdiagram can take a custom callback here, with the following params:
-	* pgn: string that can be parsed as a normal pgn (eg, double linebreak b/w header
-	* and move text, moves in the format `<fullmoveNumber>. <whiteMove> <blackMove>`
-	* or /\d+\.\s\w+(?:\s\w+)?/ )
-	* move: half move (so if you want 1. e4, you'd pass 1. If you want 2 ... Nf6,
-	* you'd pass 4). If passed 0, should return the start position. Should be
-	* stateless.*/
-	getNthMove: React.PropTypes.func,
 	/** height of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
 	height: React.PropTypes.oneOfType([
 		React.PropTypes.string,
@@ -175,31 +171,27 @@ Chessdiagram.propTypes = {
 	]),
 };
 
-/** Takes a pgn and returns the FEN of the nth move.
-* Chessdiagram can take a custom callback here, with the following params:
-* pgn: string that can be parsed as a normal pgn (eg, double linebreak b/w header
-* and move text, moves in the format `<fullmoveNumber>. <whiteMove> <blackMove>`
-* or /\d+\.\s\w+(?:\s\w+)?/ )
-* move: half move (so if you want 1. e4, you'd pass 1. If you want 2 ... Nf6,
-* you'd pass 4). If passed 0, should return the start position. Should be
-* stateless.
-*/
-const getNthMoveDefault = (pgn, move) => {
-
+const getAllFenDefault = (pgn) => {
 	var Game = require('chess.js'); // eslint-disable-line no-undef
 	if (Game.Chess) { // HACK: make it work in the test suite
 		Game = Game.Chess;
 	}
-	var game = new Game();
-	if (move === 0) {
-		return game.fen();
+	const game = new Game();
+	if (!pgn) {
+		return [game.fen()];
 	}
 	game.load_pgn(pgn);
-
-	for (let i = game.history().length - move; i > 0; i--) {
-		game.undo();
+	let moves = [game.fen()];
+	while (true) {
+		const result = game.undo();
+		if (result) {
+			moves.push(game.fen());
+		} else {
+			break;
+		}
 	}
-	return game.fen();
+	moves = moves.reverse();
+	return moves;
 };
 
 Chessdiagram.defaultProps = {
@@ -209,7 +201,7 @@ Chessdiagram.defaultProps = {
 	files: 8,
 	flip: false,
 	gameHistory: false,
-	getNthMove: getNthMoveDefault,
+	getAllFen: getAllFenDefault,
 	lightSquareColor: "#2492FF",
 	newlineChar: '\r?\n',
 	pieceDefinitions: {},

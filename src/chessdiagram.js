@@ -35,7 +35,12 @@ class Chessdiagram extends Component {
 	constructor(props) {
 		super(props);
 
-		const moves = props.fen ? [props.fen] : props.getAllFen(props.pgn);
+		// If provided with a fen, then if it's an array use it for moves and if it's
+		// not (ie, it's a string) make it the first element of the moves array.
+		// If there's no FEN, generate an array of FENs using getFensFromPgn
+		const moves = props.fen ?
+			Array.isArray(props.fen) ? props.fen : [props.fen]
+			: props.getFensFromPgn(props.pgn);
 		const currentMove = props.fen ? 0 : this.startMove;
 		this.state = {
 			currentMove,
@@ -49,7 +54,7 @@ class Chessdiagram extends Component {
 			this.setState({currentMove: 0, moves: [nextProps.fen]});
 		}
 		if (nextProps.pgn && nextProps.pgn !== this.props.pgn) {
-			this.setState({currentMove: this.startMove, moves: nextProps.getAllFen(nextProps.pgn)});
+			this.setState({currentMove: this.startMove, moves: nextProps.getFensFromPgn(nextProps.pgn)});
 		}
 	}
 
@@ -114,7 +119,10 @@ Chessdiagram.propTypes = {
 	allowMoves: React.PropTypes.bool,
 	darkSquareColor: React.PropTypes.string,
 	/** Fen string to render. Should override  */
-	fen: React.PropTypes.string,
+	fen: React.PropTypes.oneOfType([
+		React.PropTypes.string,
+		React.PropTypes.array
+	]),
 	files: React.PropTypes.number,
 	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */
 	flip: React.PropTypes.bool,
@@ -122,7 +130,7 @@ Chessdiagram.propTypes = {
 	gameHistory: React.PropTypes.bool,
 	/** Optional custom callbacks for PGN parsing. should take pgn (string).
 	*/
-	getAllFen: React.PropTypes.func,
+	getFensFromPgn: React.PropTypes.func,
 	getHeader: React.PropTypes.func,
 	getMovetext: React.PropTypes.func,
 	getResult: React.PropTypes.func,
@@ -138,9 +146,6 @@ Chessdiagram.propTypes = {
 	newlineChar: React.PropTypes.string,
 	/** callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback */
 	onMovePiece: React.PropTypes.func,
-	/** callback for when user changes which move in a pgn they are viewing. called
-	* with the direction that we're moving */
-	onMovePgnHead: React.PropTypes.func,
 	/** callback function which is called when user clicks on a square. Passes name of square as parameter to callback */
 	onSelectSquare: React.PropTypes.func,
 	/** String representation of a PGN. Note that chess.js can't handle templates,
@@ -171,7 +176,7 @@ Chessdiagram.propTypes = {
 	]),
 };
 
-const getAllFenDefault = (pgn) => {
+const getFensFromPgnDefault = (pgn) => {
 	var Game = require('chess.js'); // eslint-disable-line no-undef
 	if (Game.Chess) { // HACK: make it work in the test suite
 		Game = Game.Chess;
@@ -201,7 +206,7 @@ Chessdiagram.defaultProps = {
 	files: 8,
 	flip: false,
 	gameHistory: false,
-	getAllFen: getAllFenDefault,
+	getFensFromPgn: getFensFromPgnDefault,
 	lightSquareColor: "#2492FF",
 	newlineChar: '\r?\n',
 	pieceDefinitions: {},

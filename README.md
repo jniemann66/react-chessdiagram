@@ -63,6 +63,7 @@ testing: **npm test** (testing is implemented with Jest, Enzyme, and sinon)
 
 
 ### recently completed:
+- **Added PGN viewer to show games (Thanks Stephen !).** *Refer to [API Documentation](api.md) for details.*
 - Ability to define custom piece types and their corresponding FEN characters
 - Test suite
 - deal with Scrolling properly !

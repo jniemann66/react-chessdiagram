@@ -31,6 +31,10 @@ module.exports = {
             "error",
             "always"
         ],
+        "no-constant-condition": [
+          "error",
+          {"checkLoops": false}
+        ],
         "react/display-name": "off"
     }
 };

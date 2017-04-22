@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Chessdiagram from '../src/chessdiagram.js';
+import Chess from 'chess.js';
 
 import './App.css';
-
-const pieces = [
-			'R@a1', 'N@b1', 'B@c1', 'Q@d1', 'K@e1', 'B@f1', 'N@g1', 'R@h1',
-			'P@a2', 'P@b2', 'P@c2', 'P@d2', 'P@e2', 'P@f2', 'P@g2', 'P@h2',
-			'p@a7', 'p@b7', 'p@c7', 'p@d7', 'p@e7', 'p@f7', 'p@g7', 'p@h7',
-			'r@a8', 'n@b8', 'b@c8', 'q@d8', 'k@e8', 'b@f8', 'n@g8', 'r@h8',
-		];
 
 class App extends Component {
 	constructor(props) {
@@ -17,34 +11,82 @@ class App extends Component {
 		this.state = {
 			lightSquareColor: "#2492FF", // light blue
 			darkSquareColor: "#005EBB", // dark blue
-			currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", // starting position
 			flip: false,
 			lastMessage: '',
 			squareSize: 45,
-			gameType: 'chess',
-			ranks: 8,
-			files: 8
+			gameType: 'chess'
 		};
 		this.gamePresets = {
 			chess: {
-				currentPosition: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-				ranks: 8,
+				// fen: "1r3kr1/pbpBBp1p/1b3P2/8/8/2P2q2/P4PPP/3R2K1 b - - 0 24",
 				files: 8,
-				pieceDefinitions: {}
+				flip: true,
+				gameHistory: true,
+				ranks: 8,
+				pieceDefinitions: {},
+				pgn: ['[Event "Third Rosenwald Trophy"]',
+				'[Site "New York, NY USA"]',
+				'[Date "1956.10.17"]',
+				'[EventDate "1956.10.07"]',
+				'[Round "8"]',
+				'[Result "0-1"]',
+				'[White "Donald Byrne"]',
+				'[Black "Robert James Fischer"]',
+				'[ECO "D92"]',
+				'[WhiteElo "?"]',
+				'[BlackElo "?"]',
+				'[PlyCount "82"]',
+				'',
+				'1. Nf3 Nf6 2. c4 g6 3. Nc3 Bg7 4. d4 O-O 5. Bf4 d5 6. Qb3 dxc4',
+				'7. Qxc4 c6 8. e4 Nbd7 9. Rd1 Nb6 10. Qc5 Bg4 11. Bg5 {11. Be2',
+				'followed by 12 O-O would have been more prudent. The bishop',
+				'move played allows a sudden crescendo of tactical points to be',
+				'uncovered by Fischer. -- Wade} Na4 {!} 12. Qa3 {On 12. Nxa4',
+				'Nxe4 and White faces considerable difficulties.} Nxc3 {At',
+				'first glance, one might think that this move only helps White',
+				'create a stronger pawn center; however, Fischer\'s plan is',
+				'quite the opposite. By eliminating the Knight on c3, it',
+				'becomes possible to sacrifice the exchange via Nxe4 and smash',
+				'White\'s center, while the King remains trapped in the center.}',
+				'13. bxc3 Nxe4 {The natural continuation of Black\'s plan.}',
+				'14. Bxe7 Qb6 15. Bc4 Nxc3 16. Bc5 Rfe8+ 17. Kf1 Be6 {!! If',
+				'this is the game of the century, then 17...Be6!! must be the',
+				'counter of the century. Fischer offers his queen in exchange',
+				'for a fierce attack with his minor pieces. Declining this',
+				'offer is not so easy: 18. Bxe6 leads to a \'Philidor Mate\'',
+				'(smothered mate) with ...Qb5+ 19. Kg1 Ne2+ 20. Kf1 Ng3+',
+				'21. Kg1 Qf1+ 22. Rxf1 Ne2#. Other ways to decline the queen',
+				'also run into trouble: e.g., 18. Qxc3 Qxc5} 18. Bxb6 Bxc4+',
+				'19. Kg1 Ne2+ 20. Kf1 Nxd4+ {This tactical scenario, where a',
+				'king is repeatedly revealed to checks, is sometimes called a',
+				'"windmill."} 21. Kg1 Ne2+ 22. Kf1 Nc3+ 23. Kg1 axb6 24. Qb4',
+				'Ra4 25. Qxb6 Nxd1 26. h3 Rxa2 27. Kh2 Nxf2 28. Re1 Rxe1',
+				'29. Qd8+ Bf8 30. Nxe1 Bd5 31. Nf3 Ne4 32. Qb8 b5 {Every piece',
+				'and pawn of the black camp is defended. The white queen has',
+				'nothing to do.} 33. h4 h5 34. Ne5 Kg7 35. Kg1 Bc5+ 36. Kf1',
+				'Ng3+ {Now Byrne is hopelessly entangled in Fischer\'s mating',
+				'net.} 37. Ke1 Bb4+ 38. Kd1 Bb3+ 39. Kc1 Ne2+ 40. Kb1 Nc3+',
+				'41. Kc1 Rc2# 0-1'].join('\n'),
+					startMove: 'b11'
 			},
 			draughts: {
-				currentPosition: "1g1g1g1g1g/g1g1g1g1g1/1g1g1g1g1g/g1g1g1g1g1/10/10/1G1G1G1G1G/G1G1G1G1G1/1G1G1G1G1G/G1G1G1G1G1 w - - 0 1",
-				ranks: 10,
+				fen: "1g1g1g1g1g/g1g1g1g1g1/1g1g1g1g1g/g1g1g1g1g1/10/10/1G1G1G1G1G/G1G1G1G1G1/1G1G1G1G1G/G1G1G1G1G1 w - - 0 1",
 				files: 10,
+				flip: false,
+				gameHistory: false,
+				ranks: 10,
 				pieceDefinitions: {
 					'G': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/9/90/Draughts_mlt45.svg"),
 					'g': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/0/0c/Draughts_mdt45.svg")
-				}
+				},
+				pgn: ''
 			},
 			courier: {
-				currentPosition: "rnbcmk1scbnr/1ppppp1pppp1/6q5/p5p4p/P5P4p/6Q5/1PPPPP1PPPP1/RNBCMK1SCBNR",
-				ranks: 8,
+				fen: "rnbcmk1scbnr/1ppppp1pppp1/6q5/p5p4p/P5P4p/6Q5/1PPPPP1PPPP1/RNBCMK1SCBNR",
 				files: 12,
+				flip: false,
+				gameHistory: false,
+				ranks: 8,
 				pieceDefinitions: {
 					'C': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/7/7c/Chess_Blt45.svg"),
 					'c': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/5/5a/Chess_Bdt45.svg"),
@@ -52,9 +94,11 @@ class App extends Component {
 					'm': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/2/2c/Chess_fdt45.svg"),
 					'S': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/c/ce/Chess_tlt45.svg"),
 					's': this._createPieceDefinition("https://upload.wikimedia.org/wikipedia/commons/e/e2/Chess_tdt45.svg")
-				}
+				},
+				pgn: ''
 			}
-		}
+		};
+		this.state = Object.assign({}, this.state, this.gamePresets[this.state.gameType])
 	}
 
 	// Convenience function for concisely creating piece definition callbacks
@@ -68,8 +112,8 @@ class App extends Component {
 
 // event handlers:
 
-	_onPositionChanged(evt) { // user inputted new position
-		this.setState({currentPosition: evt.target.value});
+	_onFenChanged(evt) { // user inputted new position
+		this.setState({fen: evt.target.value});
 	}
 
 	_onFlipChanged(evt) { //flip board
@@ -85,14 +129,12 @@ class App extends Component {
 	}
 
 	_onMovePiece(piece, fromSquare, toSquare) { // user moved a piece
-		clearTimeout(this.timeout)
+		clearTimeout(this.timeout);
 		// echo move back to user:
 		let message = 'You moved ' + piece + fromSquare + " to " + toSquare + ' !';
-		this.setState({lastMessage: message}, (()=> {
-			this.timeout = setTimeout(()=> {
-					this.setState({lastMessage: ''});
-			}, 2000); // clear message after 2s
-		}));
+		this.setState({lastMessage: message}, () => {
+			this.timeout = setTimeout(() => {this.setState({lastMessage: ''})}, 2000)
+		});
 	}
 
 	_onFilesChanged(evt) {
@@ -107,6 +149,11 @@ class App extends Component {
 		this.setState(Object.assign(this.gamePresets[evt.target.value], {gameType: evt.target.value}));
 	}
 
+	_onPgnChanged(evt) {
+		this.setState({pgn: evt.target.value});
+		this.game.load_pgn(evt.target.value);
+	}
+
 // the render() function:
   render() {
     return (
@@ -115,8 +162,17 @@ class App extends Component {
 				<div>
 					<div>
 						<p> Enter a position (using a FEN string) here:</p>
-						<input type="text" value={this.state.currentPosition} size="70" onChange={this._onPositionChanged.bind(this)}
-							autoCapitalize="off" autoCorrect="off" autoComplete="off" spellCheck="false"/>
+						<input
+							autoCapitalize="off"
+							autoCorrect="off"
+							autoComplete="off"
+							className={"fen-input"}
+							onChange={this._onFenChanged.bind(this)}
+							size="70"
+							spellCheck="false"
+							type="text"
+							value={this.state.fen}
+						/>
 					</div>
 					<div className="propGroup">
 						<p> Square Size: </p>
@@ -140,12 +196,32 @@ class App extends Component {
 					</div>
 					<p/>
 				</div>
-					<Chessdiagram flip={this.state.flip} fen={this.state.currentPosition} squareSize={this.state.squareSize}
-						lightSquareColor={this.state.lightSquareColor} darkSquareColor={this.state.darkSquareColor} onMovePiece={this._onMovePiece.bind(this)}
-						ranks={this.state.ranks} files={this.state.files}
+					<Chessdiagram
+						darkSquareColor={this.state.darkSquareColor}
+						fen={this.state.fen}
+						gameHistory={this.state.gameHistory}
+						startPosition={this.state.currentPosition}
+						files={this.state.files}
+						flip={this.state.flip}
+						lightSquareColor={this.state.lightSquareColor}
+						onMovePiece={this._onMovePiece.bind(this)}
+						pgn={this.state.pgn}
 						pieceDefinitions={this.gamePresets[this.state.gameType].pieceDefinitions}
+						ranks={this.state.ranks}
+						squareSize={this.state.squareSize}
+						startMove={this.state.startMove}
 					/>
-				<p className={"lastMessage"}><strong>{this.state.lastMessage}</strong></p>
+					<p className={"lastMessage"}><strong>{this.state.lastMessage}</strong></p>
+
+				{this.state.pgn ? <div style={{position: 'relative', top: 40}}>
+					Displaying the following PGN:<br />
+					<textarea
+						cols={60}
+						onChange={this._onPgnChanged.bind(this)}
+						rows={20}
+						value={this.state.pgn}
+					/>
+				</div> : null}
 			</div>
     );
   }

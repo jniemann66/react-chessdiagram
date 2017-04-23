@@ -83,7 +83,7 @@ class App extends Component {
 				pgn: ''
 			},
 			courier: {
-				fen: "rnbcmk1scbnr/1ppppp1pppp1/6q5/p5p4p/P5P4p/6Q5/1PPPPP1PPPP1/RNBCMK1SCBNR",
+				fen: "rnbcmk1scbnr/1ppppp1pppp1/6q5/p5p4p/P5P4P/6Q5/1PPPPP1PPPP1/RNBCMK1SCBNR",
 				files: 12,
 				flip: false,
 				gameHistory: false,

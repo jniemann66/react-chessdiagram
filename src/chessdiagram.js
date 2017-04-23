@@ -35,13 +35,16 @@ class Chessdiagram extends Component {
 	constructor(props) {
 		super(props);
 
-		// If provided with a fen, then if it's an array use it for moves and if it's
-		// not (ie, it's a string) make it the first element of the moves array.
-		// If there's no FEN, generate an array of FENs using getFensFromPgn
+		// If FEN is present, and it is an array, use it for moves
+		// If FEN is present, and it is a string, make it the first element of the moves array.
+		// If FEN is NOT present, and PGN is present, call getFensFromPgn() to generate an array of FENs 
+		// If FEN is NOT present, and PGN is NOT present, make first element of moves array an empty string
 		const moves = props.fen ?
 			Array.isArray(props.fen) ? props.fen : [props.fen]
-			: props.getFensFromPgn(props.pgn);
-		const currentMove = props.fen ? 0 : this.startMove;
+			: props.pgn ? props.getFensFromPgn(props.pgn) : '';
+
+		// If there is a PGN, set currentMove to this.startMove, otherwise zero.	
+		const currentMove = props.pgn ? this.startMove : 0;
 		this.state = {
 			currentMove,
 			moves

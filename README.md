@@ -11,9 +11,10 @@ NPM: [https://www.npmjs.com/package/react-chessdiagram](https://www.npmjs.com/pa
 
 ![screenshot](https://github.com/jniemann66/react-chessdiagram/blob/master/screenshot.PNG)
 
-A react component that can display chess positions from FEN strings or a form of algebraic notation (P@a5 R@h8 etc)
+A react component that can display chess positions from FEN strings, PGN Strings, or a form of algebraic notation (P@a5 R@h8 etc)
 
-It is almost entirely stateless. (some state is maintained to keep track of mouse / touch events.)
+It is almost entirely stateless. 
+(some state is maintained to keep track of mouse / touch events, and an internal list of moves when displaying a game)
 
 A callback facility is provided to report dragged pieces back to the host application.
 
@@ -63,7 +64,7 @@ testing: **npm test** (testing is implemented with Jest, Enzyme, and sinon)
 
 
 ### recently completed:
-- **Added PGN viewer to show games (Thanks Stephen !).** *Refer to [API Documentation](api.md) for details.*
+- **Added PGN viewer to show games** (Thanks Stephen !). *(Refer to [API Documentation](api.md) for details.)*
 - Ability to define custom piece types and their corresponding FEN characters
 - Test suite
 - deal with Scrolling properly !

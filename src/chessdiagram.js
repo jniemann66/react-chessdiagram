@@ -41,7 +41,7 @@ class Chessdiagram extends Component {
 		// If FEN is NOT present, and PGN is NOT present, make first element of moves array an empty string
 		const moves = props.fen ?
 			Array.isArray(props.fen) ? props.fen : [props.fen]
-			: props.pgn ? props.getFensFromPgn(props.pgn) : '';
+			: props.pgn ? props.getFensFromPgn(props.pgn) : [''];
 
 		// If there is a PGN, set currentMove to this.startMove, otherwise zero.	
 		const currentMove = props.pgn ? this.startMove : 0;

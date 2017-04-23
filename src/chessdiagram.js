@@ -61,7 +61,7 @@ class Chessdiagram extends Component {
 	// event handling ////
 
 	_onMovePiece(pieceType, from, to) {
-		if (this.props.allowMoves) {
+		if (this.props.allowMoves && this.props.onMovePiece) {
 			this.props.onMovePiece(pieceType, from, to);
 		}
 	}

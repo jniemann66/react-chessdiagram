@@ -24,6 +24,7 @@ class App extends Component {
 				gameHistory: true,
 				ranks: 8,
 				pieceDefinitions: {},
+				fen: '',
 				pgn: ['[Event "Third Rosenwald Trophy"]',
 				'[Site "New York, NY USA"]',
 				'[Date "1956.10.17"]',
@@ -98,7 +99,7 @@ class App extends Component {
 				pgn: ''
 			}
 		};
-		this.state = Object.assign({}, this.state, this.gamePresets[this.state.gameType])
+		this.state = Object.assign({}, this.state, this.gamePresets[this.state.gameType]);
 	}
 
 	// Convenience function for concisely creating piece definition callbacks

@@ -3,7 +3,7 @@
 # react-chessdiagram
 Chess Diagram React Component
 
-LIVE DEMO: [http://chessdiagram.juddn.com](http://chessdiagram.juddn.com)
+LIVE DEMO: [http://chessdiagram.juddn.com](http://chessdiagram.juddn.com) *updated 24-apr-2017*
 
 Knight's Tour Demo: [http://knightstour.juddn.com](http://knightstour.juddn.com)
 

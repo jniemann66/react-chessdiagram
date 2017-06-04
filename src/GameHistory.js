@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import PropTypes from 'prop-types';
+
 
 class MovetextViewer extends Component {
 	shouldComponentUpdate(nextProps) {
@@ -79,9 +81,9 @@ class MovetextViewer extends Component {
 }
 
 MovetextViewer.propTypes = {
-	rows: React.PropTypes.array,
-	halfMove: React.PropTypes.number,
-	moveHead: React.PropTypes.func
+	rows: PropTypes.array,
+	halfMove: PropTypes.number,
+	moveHead: PropTypes.func
 };
 
 class PgnControls extends Component {
@@ -98,7 +100,7 @@ class PgnControls extends Component {
 }
 
 PgnControls.propTypes = {
-	moveHead: React.PropTypes.func.isRequired
+	moveHead: PropTypes.func.isRequired
 };
 
 class GameHistory extends Component {
@@ -161,17 +163,17 @@ class GameHistory extends Component {
 }
 
 GameHistory.propTypes = {
-	currentMove: React.PropTypes.number,
-	getHeader: React.PropTypes.func,
-	getMovetext: React.PropTypes.func,
-	getResult: React.PropTypes.func,
-	getRows: React.PropTypes.func,
-	moveHead: React.PropTypes.func,
-	newlineChar: React.PropTypes.string.isRequired,
-	pgn: React.PropTypes.string,
-	pgnHeight: React.PropTypes.number,
-	pgnWidth: React.PropTypes.number,
-	sloppy: React.PropTypes.bool
+	currentMove: PropTypes.number,
+	getHeader: PropTypes.func,
+	getMovetext: PropTypes.func,
+	getResult: PropTypes.func,
+	getRows: PropTypes.func,
+	moveHead: PropTypes.func,
+	newlineChar: PropTypes.string.isRequired,
+	pgn: PropTypes.string,
+	pgnHeight: PropTypes.number,
+	pgnWidth: PropTypes.number,
+	sloppy: PropTypes.bool
 };
 
 const defaultGetHeader = (pgn, newlineChar) => {

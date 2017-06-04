@@ -28,6 +28,8 @@ import React, { Component } from 'react';
 import Board from './board.js';
 import Piece from './piece.js';
 import standardPieceDefinitions from './pieceDefinitions.js';
+import PropTypes from 'prop-types';
+
 
 /** BoardContainer : handles user input and draws a chess diagram consisting of
 * a board and pieces, using svg graphics */
@@ -315,35 +317,35 @@ class BoardContainer extends Component {
 }
 BoardContainer.propTypes = {
 	/** Dictionary of legal moves, to be supplied by server*/
-	allowedMoves: React.PropTypes.object,
-	darkSquareColor: React.PropTypes.string,
+	allowedMoves: PropTypes.object,
+	darkSquareColor: PropTypes.string,
 	/** Chess position in FEN format (Forsyth-Edwards Notation). eg "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" */
-	fen: React.PropTypes.string,
-	files: React.PropTypes.number,
+	fen: PropTypes.string,
+	files: PropTypes.number,
 	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */
-	flip: React.PropTypes.bool,
+	flip: PropTypes.bool,
 	/** height of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
-	height: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
+	height: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
 	]),
-	lightSquareColor: React.PropTypes.string,
+	lightSquareColor: PropTypes.string,
 	/** callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback */
-	onMovePiece: React.PropTypes.func,
+	onMovePiece: PropTypes.func,
 	/** callback function which is called when user clicks on a square. Passes name of square as parameter to callback */
-	onSelectSquare: React.PropTypes.func,
+	onSelectSquare: PropTypes.func,
 	/** array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1'].
 	* This format may be more suitable for unconventional board dimensions, for which standard FEN would not work.
 	* Note: If both FEN and pieces props are present, FEN will take precedence */
-	pieces: React.PropTypes.array,
+	pieces: PropTypes.array,
 	/** Optional associative array containing non-standard chess characters*/
-	pieceDefinitions: React.PropTypes.object,
-	ranks: React.PropTypes.number,
-	squareSize: React.PropTypes.number,
+	pieceDefinitions: PropTypes.object,
+	ranks: PropTypes.number,
+	squareSize: PropTypes.number,
 	/** width of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
-	width: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
+	width: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
 	]),
 };
 

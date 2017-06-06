@@ -29,6 +29,8 @@ SOFTWARE.
 import React, { Component } from 'react';
 import BoardContainer from './BoardContainer.js';
 import GameHistory from './GameHistory.js';
+import PropTypes from 'prop-types';
+
 
 /** Chessdiagram : draws a chess diagram consisting of a board and pieces, using svg graphics */
 class Chessdiagram extends Component {
@@ -37,13 +39,13 @@ class Chessdiagram extends Component {
 
 		// If FEN is present, and it is an array, use it for moves
 		// If FEN is present, and it is a string, make it the first element of the moves array.
-		// If FEN is NOT present, and PGN is present, call getFensFromPgn() to generate an array of FENs 
+		// If FEN is NOT present, and PGN is present, call getFensFromPgn() to generate an array of FENs
 		// If FEN is NOT present, and PGN is NOT present, make first element of moves array an empty string
 		const moves = props.fen ?
 			Array.isArray(props.fen) ? props.fen : [props.fen]
 			: props.pgn ? props.getFensFromPgn(props.pgn) : [''];
 
-		// If there is a PGN, set currentMove to this.startMove, otherwise zero.	
+		// If there is a PGN, set currentMove to this.startMove, otherwise zero.
 		const currentMove = props.pgn ? this.startMove : 0;
 		this.state = {
 			currentMove,
@@ -119,63 +121,63 @@ class Chessdiagram extends Component {
 
 Chessdiagram.propTypes = {
 	/** Whether to allow the user to make moves on the board (ie, whether to ignore mouse input) */
-	allowMoves: React.PropTypes.bool,
-	darkSquareColor: React.PropTypes.string,
+	allowMoves: PropTypes.bool,
+	darkSquareColor: PropTypes.string,
 	/** Fen string to render. Should override  */
-	fen: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.array
+	fen: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.array
 	]),
-	files: React.PropTypes.number,
+	files: PropTypes.number,
 	/** if true, rotates the board so that Black pawns are moving up, and White pawns are moving down the board */
-	flip: React.PropTypes.bool,
+	flip: PropTypes.bool,
 	/** whether to render a GameHistory component */
-	gameHistory: React.PropTypes.bool,
+	gameHistory: PropTypes.bool,
 	/** Optional custom callbacks for PGN parsing. should take pgn (string).
 	*/
-	getFensFromPgn: React.PropTypes.func,
-	getHeader: React.PropTypes.func,
-	getMovetext: React.PropTypes.func,
-	getResult: React.PropTypes.func,
+	getFensFromPgn: PropTypes.func,
+	getHeader: PropTypes.func,
+	getMovetext: PropTypes.func,
+	getResult: PropTypes.func,
 	/** Returns an array of arrays, containing [<fullmoveNumber>, <whiteMove> <optionalBlackMove>] */
-	getRows: React.PropTypes.func,
+	getRows: PropTypes.func,
 	/** height of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
-	height: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
+	height: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
 	]),
-	lightSquareColor: React.PropTypes.string,
+	lightSquareColor: PropTypes.string,
 	/** Pgn line separator. Defaults to '\r?\n'*/
-	newlineChar: React.PropTypes.string,
+	newlineChar: PropTypes.string,
 	/** callback function which is called when user moves a piece. Passes pieceType, initialSquare, finalSquare as parameters to callback */
-	onMovePiece: React.PropTypes.func,
+	onMovePiece: PropTypes.func,
 	/** callback function which is called when user clicks on a square. Passes name of square as parameter to callback */
-	onSelectSquare: React.PropTypes.func,
+	onSelectSquare: PropTypes.func,
 	/** String representation of a PGN. Note that chess.js can't handle templates,
 	* so if you'd like to pass templates you'll need a custom getNthMove callback.*/
-	pgn: React.PropTypes.string,
+	pgn: PropTypes.string,
 	/** Height of pgn viewer component */
-	pgnHeight: React.PropTypes.number,
+	pgnHeight: PropTypes.number,
 	/** array of pieces at particular squares (alternative to fen) eg ['P@f2','P@g2','P@h2','K@g1'].
 	* This format may be more suitable for unconventional board dimensions, for which standard FEN would not work.
 	* Note: If both FEN and pieces props are present, FEN will take precedence */
-	pieces: React.PropTypes.array,
+	pieces: PropTypes.array,
 	/** Optional associative array containing non-standard chess characters*/
-	pieceDefinitions: React.PropTypes.object,
-	ranks: React.PropTypes.number,
+	pieceDefinitions: PropTypes.object,
+	ranks: PropTypes.number,
 	/** size of the squares in pixels */
-	squareSize: React.PropTypes.number,
+	squareSize: PropTypes.number,
 	// Which move to start the game on. Either halfmove count or letter followed by full move eg w12 //
-	startMove: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number
+	startMove: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number
 	]),
 	/** Chess position in FEN format (Forsyth-Edwards Notation). eg "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" */
-	startPosition: React.PropTypes.string,
+	startPosition: PropTypes.string,
 	/** width of main svg container in pixels. If setting this manually, it should be at least 9 * squareSize to fit board AND labels*/
-	width: React.PropTypes.oneOfType([
-		React.PropTypes.string,
-		React.PropTypes.number,
+	width: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
 	]),
 };
 

@@ -26,6 +26,7 @@ SOFTWARE.
 
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Square extends Component {
 	render() {
@@ -45,12 +46,12 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-	darkSquareColor: React.PropTypes.string.isRequired,
-	light: React.PropTypes.bool.isRequired,
-	lightSquareColor: React.PropTypes.string.isRequired,
-	squareSize: React.PropTypes.number.isRequired,
-	x: React.PropTypes.number.isRequired,
-	y: React.PropTypes.number.isRequired,
+	darkSquareColor: PropTypes.string.isRequired,
+	light: PropTypes.bool.isRequired,
+	lightSquareColor: PropTypes.string.isRequired,
+	squareSize: PropTypes.number.isRequired,
+	x: PropTypes.number.isRequired,
+	y: PropTypes.number.isRequired,
 };
 Square.displayName = 'Square';
 
@@ -61,10 +62,10 @@ class SquareHighlight extends Component {
 }
 
 SquareHighlight.propTypes = {
-	highlightColor: React.PropTypes.string.isRequired,
-	squareSize: React.PropTypes.number.isRequired,
-	x: React.PropTypes.number.isRequired,
-	y: React.PropTypes.number.isRequired,
+	highlightColor: PropTypes.string.isRequired,
+	squareSize: PropTypes.number.isRequired,
+	x: PropTypes.number.isRequired,
+	y: PropTypes.number.isRequired,
 };
 
 SquareHighlight.defaultProps = {
@@ -126,10 +127,10 @@ class FileLabels extends Component {
 }
 
 const LabelPropTypes = {
-	files: React.PropTypes.number,
-	flip: React.PropTypes.bool.isRequired,
-	ranks: React.PropTypes.number,
-	squareSize: React.PropTypes.number.isRequired,
+	files: PropTypes.number,
+	flip: PropTypes.bool.isRequired,
+	ranks: PropTypes.number,
+	squareSize: PropTypes.number.isRequired,
 };
 
 RankLabels.propTypes = LabelPropTypes;
@@ -226,14 +227,14 @@ class Board extends Component {
 }
 
 Board.propTypes = {
-	darkSquareColor: React.PropTypes.string.isRequired,
-	files: React.PropTypes.number.isRequired,
-	flip: React.PropTypes.bool.isRequired,
-	highlights: React.PropTypes.object,
-	lightSquareColor: React.PropTypes.string.isRequired,
-	ranks: React.PropTypes.number.isRequired,
-	selectedSquare: React.PropTypes.string,
-	squareSize: React.PropTypes.number.isRequired,
+	darkSquareColor: PropTypes.string.isRequired,
+	files: PropTypes.number.isRequired,
+	flip: PropTypes.bool.isRequired,
+	highlights: PropTypes.object,
+	lightSquareColor: PropTypes.string.isRequired,
+	ranks: PropTypes.number.isRequired,
+	selectedSquare: PropTypes.string,
+	squareSize: PropTypes.number.isRequired,
 };
 
 Board.defaultProps = {

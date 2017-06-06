@@ -5,6 +5,7 @@
   "main": "./build/dist.chessdiagram.js",
   "dependencies": {
     "chess.js": "^0.10.2",
+    "prop-types": "^15.5.10",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-table": "^5.4.1"

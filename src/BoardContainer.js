@@ -47,6 +47,8 @@ class BoardContainer extends Component {
 			width: 0,
 			height: 0,
 		};
+		this._onResize = this._onResize.bind(this);
+		this._onScroll = this._onScroll.bind(this);
 	}
 
 	// Lifecycle events ////
@@ -54,13 +56,13 @@ class BoardContainer extends Component {
 	componentDidMount() {
 		this._getClientPos();
 		// add DOM events
-		addEventListener('resize', this._onResize.bind(this)); // resize event not provided by React events; use DOM version
-		addEventListener('scroll', this._onScroll.bind(this));
+		addEventListener('resize', this._onResize); // resize event not provided by React events; use DOM version
+		addEventListener('scroll', this._onScroll);
 	}
 
 	componentWillUnmount() {
-		removeEventListener('resize', this._onResize.bind(this));
-		removeEventListener('scroll', this._onScroll.bind(this));
+		removeEventListener('resize', this._onResize);
+		removeEventListener('scroll', this._onScroll);
 	}
 
 	componentWillReceiveProps (nextProps) {

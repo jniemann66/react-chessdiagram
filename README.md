@@ -78,4 +78,6 @@ testing: **npm test** (testing is implemented with Jest, Enzyme, and sinon)
 
 [Stephen Van Gordon](https://github.com/jniemann66/react-chessdiagram/commits/master?author=svangordon)
 
+[Graham Kaemmer](https://github.com/jniemann66/react-chessdiagram/commits/master?author=gkaemmer)
+
 

@@ -341,7 +341,7 @@ class BoardContainer extends Component {
         onMouseUp={this._onMouseUp.bind(this)}
         width={
           this.props.width === "auto"
-            ? (1 + this.props.files) * this.props.squareSize
+            ? (this.props.labels + this.props.files) * this.props.squareSize
             : this.props.width
         }
       >

@@ -157,11 +157,12 @@ class BoardContainer extends Component {
   _fileRankToCoords(file, rank) {
     // convert zero-based file and rank values to coordinates
     if (this.props.flip) {
-      let x = this.props.squareSize * (this.props.files - file);
+      let x =
+        this.props.squareSize * (this.props.files - file - !this.props.labels);
       let y = this.props.squareSize * rank;
       return [x, y];
     } else {
-      let x = this.props.squareSize * (1 + file);
+      let x = this.props.squareSize * (this.props.labels + file);
       let y = this.props.squareSize * (this.props.ranks - rank - 1);
       return [x, y];
     }

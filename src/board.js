@@ -196,13 +196,14 @@ class Board extends Component {
 
   _fileRankToCoords(file, rank) {
     // convert zero-based file and rank values to coordinates
-    if (this.props.flip) {
-      let x = this.props.squareSize * (this.props.files - file);
-      let y = this.props.squareSize * rank;
+    const { flip, squareSize, files, ranks, labels } = this.props;
+    if (flip) {
+      let x = squareSize * (files - file - !labels);
+      let y = squareSize * rank;
       return [x, y];
     } else {
-      let x = this.props.squareSize * (1 + file);
-      let y = this.props.squareSize * (this.props.ranks - rank - 1);
+      let x = squareSize * (labels + file);
+      let y = squareSize * (ranks - rank - 1);
       return [x, y];
     }
   }
